@@ -1,0 +1,221 @@
+﻿.interna .container .st-image {
+	background-image: url(../img/deslogadas/fundo-nao-logado.jpg);
+}
+
+.interna .container .st-image .sl-texto h2, .interna .container .st-image .sl-texto p {
+	color: #ffffff;
+}
+
+.ct-form input {
+	background-color: #F8F8F8;
+	border: 2px solid #D9D9D9;
+	color: #9D9D9D;
+	font-family: "Museo300",Segoe,"Segoe UI","DejaVu Sans","Trebuchet MS",Verdana,sans-serif;
+	font-size: 15px;
+	padding: 10px 2%;
+	width: 95%;
+	margin: 0 0 6px;
+}
+
+.ct-form label {
+	color: #474747;
+	display: block;
+	font-family: 'museo300',Segoe,"Segoe UI","DejaVu Sans","Trebuchet MS",Verdana,sans-serif;
+	font-size: 15px;
+	height: 24px;
+	padding: 18px 0 0;
+}
+
+.ct-form .form-col-1 {
+	float: left;
+	width: 48%;
+	padding: 0 1%;
+}
+
+.ct-form .form-col-2 {
+	float: left;
+	width: 48%;
+	padding: 0 1%;
+}
+
+.ct-form .form-col-3 {
+	float: left;
+	width: 98%;
+	padding: 0 1%;
+}
+
+.ct-form .form-col-3 .fix {
+	float: left;
+	margin: 0 0 0 2%;
+	width: 49%;
+}
+
+.ct-form .form-col-3 .fix:first-child {
+	margin: 0;
+}
+
+.ct-form .form-notas {
+	float: left;
+	width: 98%;
+	padding: 0 0 0 2%;
+}
+
+.ct-form .form-notas p {
+	padding: 0 0 20px;
+}
+
+.ct-form .form-notas p a {
+	color: #00aeef;
+	font-family: 'museo300',Segoe,"Segoe UI","DejaVu Sans","Trebuchet MS",Verdana,sans-serif;
+	font-size: 15px;
+}
+
+.ct-form .form-notas p a:before {
+	content: '> ';
+}
+
+.ct-form .form-notas .fix {
+	float: left;
+	width: 48%;
+	padding: 0 0 0 2%;
+}
+
+.ct-form .form-notas .fix:first-child {
+	padding: 0;
+}
+
+.ct-form .form-notas .fix label {
+	font-size: 13px;
+}
+
+.ct-form .form-notas .fix input[type='checkbox'] {
+	float: left;
+	width: auto;
+	margin: 1px 12px 0 0;
+}
+
+.ct-form form button {
+	background-image: url("../img/comum/generic-btn.png");
+	background-position: center center;
+	border-radius: 18px;
+	color: #FFFFFF;
+	cursor: pointer;
+	float: left;
+	font-family: "museo100",Segoe,"Segoe UI","DejaVu Sans","Trebuchet MS",Verdana,sans-serif;
+	font-size: 14px;
+	margin: 16px 0 0 16px;
+	padding: 5px 28px;
+}
+
+.container .st-image .sl-texto {
+	left: 2%;
+	width: 46%;
+}
+
+.container .st-image .foto-header {
+	left: 50%;
+}
+
+.container .st-footer {
+	*margin-top: 30px;
+}
+
+.render-body {
+	float: left;
+	padding-bottom: 140px;
+	width: 100%;
+}
+
+.container .st-image .foto-header img {
+	bottom: 26px;
+	position: absolute;
+}
+
+.dica {
+	border: 2px solid #00AEEF;
+	border-radius: 13px;
+	color: #00AEEF;
+	cursor: pointer;
+	display: inline-block;
+	font-weight: bold;
+	padding: 1px 6px;
+	position: relative;
+}
+
+.dica .dica-box {
+	background-image: url("../img/deslogadas/balao-dica.png");
+	background-repeat: no-repeat;
+	border-radius: 10px;
+	color: #FFFFFF;
+	display: none;
+	font-weight: normal;
+	margin: 3px 0 0 -159px;
+	padding: 22px 13px 12px 75px;
+	position: absolute;
+	width: 204px;
+    height:98px;
+	*padding: 22px 13px 24px 75px;
+	*margin: 16px 0 0 -170px;
+}
+
+.container .st-footer {
+	margin: 36px 0 0;
+}
+
+@media screen and (max-width: 960px) {
+	.container .render-body {
+		padding: 0 !important;
+	}
+}
+
+@media screen and (max-width: 620px) {
+	.ct-form .form-col-1,
+	.ct-form .form-col-2,
+	.ct-form .form-col-3,
+	.ct-form .form-col-3 .fix {
+		width: 100%;
+		margin: 0;
+		padding: 0;
+	}
+
+	.ct-form label {
+		height: auto;
+	}
+}
+
+
+@media screen and (max-width: 768px) {
+	.interna .container .st-image .foto-header {
+		display: none;
+	}
+}
+.input_date {
+	border: 1px double #D9D9D9;
+	height: 40px;
+	width: 40px;
+	float: left;
+	margin-right: 10px;
+	background-color: #F8F8F8;
+}
+.interna.naocadastrado .container .render-body .strip.st-content .wrap .ct-form #formPrimeiroAcesso .form-col-1 .input_one {
+	background-color: #F8F8F8;
+	float: left;
+	height: 50px;
+	width: 60px;
+	border: 2px solid #D9D9D9;
+	margin-right: 10px;
+}
+.interna.naocadastrado .container .render-body .strip.st-content .wrap .ct-form #formPrimeiroAcesso .form-col-2 div .input_bandeira {
+	background-color: #F8F8F8;
+	height: 40px;
+	width: 120px;
+	border: 2px solid #D9D9D9;
+}
+.interna.naocadastrado .container .render-body .strip.st-content .wrap .ct-form #formPrimeiroAcesso .form-col-2 div .input_one {
+	height: 40px;
+	width: 60px;
+	margin-right: 10px;
+	border: 2px solid #D9D9D9;
+	background-color: #F8F8F8;
+	float: left;
+}

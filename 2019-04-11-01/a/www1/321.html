@@ -1,0 +1,251 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Language" content="zh-cn" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>买链帮手_最好用的网站批量查询工具</title>
+<meta name="description" content="批量查询网站收录,批量查询网站PR,批量查询网站IP地址,批量查询网站快照日期,批量查询网站24小时收录量,专为买链接朋友设计的在线查询工具,最好用的站长工具！" />
+<meta name="keywords" content="买链帮手,网站批量查询" />
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+<link href="/template/css/css.css" rel="stylesheet" type="text/css" />
+<link href="/template/css/pop.css" rel="stylesheet" type="text/css" />
+
+
+<!--不同Jquery版本，兼容性不同，需注意-->
+<script language="javascript" type="text/javascript" src="/template/js/jquery-1.8.3.min.js"></script>
+<script language="javascript" type="text/javascript" src="/template/js/index.js"></script><!--主页为index.js，内页是inner.js-->
+<script language="javascript" type="text/javascript" src="/template/js/main.js"></script>
+<script language="javascript" type="text/javascript" src="/template/js/success.js"></script>
+<script language="javascript" type="text/javascript" src="/template/js/myfunction.js"></script>
+<script language="javascript" type="text/javascript" src="/template/js/caiji.js"></script>
+<script language="javascript" type="text/javascript" src="/template/js/pop.js"></script>
+<script language="javascript" type="text/javascript" src="/template/js/showpics.js"></script>
+</head>
+
+<body>
+
+<!--头部和导航-->
+<div class="header">
+<div class="top">
+<span class="floatleft">最好用的批量查询工具！</span>
+<span class="floatright member_info"><a href="/do.php?type=login" target="_self">登录</a>|<a href="/do.php?type=register" target="_self">注册</a></span>
+<div class="c"></div>
+</div>
+<div class="middle">
+<a class="logo" href="/" target="_self"></a>
+<a id="logo_right" href="/"></a>
+<div class="c"></div>
+</div>
+<div id="nav">
+<div class="navlinks">
+<a href="/">首页</a>
+<a href="/baidupr/">百度权重</a>
+<a href="/haosoupr/">360权重</a>
+<a href="/sogoupr/">搜狗PR</a>
+<a href="/baidu/">百度收录</a>
+<a href="/haosouaq/">360安全</a>
+<a href="/ip/">网站IP</a>
+<a href="/daochu/">导出数量</a>
+<a href="/whois/">建站时间</a>
+<a href="/sites/">去重复网址</a>
+</div>
+<div class="navtools">更多工具
+<ul class="navtoolslinks">
+<li><a href="/alexa/">ALEXA排名</a></li>
+<li><a href="/baiduaq/">百度安全</a></li>
+<li><a href="/backlinks/">百度反链</a></li>
+<li><a href="/baidusl/">百度是否收录</a></li>
+<li><a href="/haosousl/">360收录量</a></li>
+<li><a href="/haosoukz/">360是否收录</a></li>
+<li><a href="/title/">网站标题</a></li>
+<li><a href="/sogousl/">搜狗收录</a></li>
+<li><a href="/sogoukz/">搜狗快照</a></li>
+<li><a href="/backlinks1/">百度1天反链</a></li>
+<li><a href="/backlinks7/">百度7天反链</a></li>
+<li><a href="/sl1/">百度1天收录</a></li>
+<li><a href="/sl7/">百度1周收录</a></li>
+</ul>
+</div>
+</div>
+<div class="c"></div>
+</div>
+
+
+
+<!--查询输入区-->
+<div class="box">
+<!--友链检测-->
+<div class="h40">
+<div class="floatleft">
+<input class="input" type="text" id="text_becheck" name="text_becheck" value="友链检测,可不填"><span class="button"><a href="javascript:void(0);" id="btn_becheck" name="btn_becheck">检查是否撤链</a></span>
+</div>
+<div class="floatleft space_fill">
+<span class="radio checked"><input type="radio" name="becheck_type" value="2" id="becheck_type_2" checked /></span><span>精确</span>
+<span class="radio"><input type="radio" name="becheck_type" value="1" id="becheck_type_1" /></span><span>广泛</span>
+<span id="single_status"></span>
+</div>
+</div>
+
+<!--批量查询-->
+<div class="h180">
+<div class="floatleft floatright space_fill">
+<div class="h54">
+<span class="checkbox selected" title="这里显示信息提示" id="test"><input type="checkbox" id="multi" name="multi" checked /></span><span>快速查询</span>
+&nbsp;&nbsp;&nbsp;
+<span class="checkbox selected"><input type="checkbox" id="thousands" name="thousands" checked /></span><span>2000条大量查询</span>
+</div>
+<div id="pics1">
+
+</div>
+</div>
+<div class="floatleft">
+<textarea class="textarea" id="ip_websites" name="ip_websites">输入查询网址
+格式随意，会智能识别网址</textarea>
+</div>
+<div class="floatleft">
+<div class="h62">
+<span class="button" id="tj" name="tj"><a href="javascript:void(0);">提&nbsp;&nbsp;&nbsp;&nbsp;交</a></span>
+</div>
+<div class="h62">
+<span class="button" id="filters" name="filters"><a href="javascript:void(0);" title="去除重复网址、从杂乱内容中提取出网址">网址提取</a></span>
+</div>
+<div class="h62">
+<span class="button" name="clear" id="clear"><a href="javascript:void(0);">清&nbsp;&nbsp;&nbsp;&nbsp;空</a></span>
+</div>
+</div>
+</div>
+<div class="c"></div>
+
+</div>
+
+
+
+<!--查询选项-->
+<div class="box">
+<div class="floatleft">
+<p><span class="func_selectall"></span>全选</p>
+<p></p>
+</div>
+<div class="floatleft space_fill_2" id="func_area">
+<p>
+<span class="func_select red"><span class="checkbox selected"><input type="checkbox" id="chk_baiduprzz" name="chk_baiduprzz" checked /></span>百度权重-站长</span>
+<span class="func_select"><span class="checkbox"><input type="checkbox" id="chk_baidupr" name="chk_baidupr" /></span>百度权重-爱站</span>
+<span class="func_select red"><span class="checkbox selected"><input type="checkbox" id="chk_baidu" name="chk_baidu" checked /></span>百度收录</span>
+<span class="func_select"><span class="checkbox"><input type="checkbox" id="chk_backlinks" name="chk_backlinks" /></span>百度反链</span>
+<span class="func_select"><span class="checkbox"><input type="checkbox" id="chk_baiduaq" name="chk_baiduaq" /></span>百度安全</span>
+</p>
+<p>
+<span class="func_select"><span class="checkbox"><input type="checkbox" id="chk_haosoupr" name="chk_haosoupr" /></span>360权重</span>
+<span class="func_select"><span class="checkbox"><input type="checkbox" id="chk_haosousl" name="chk_haosousl" /></span>360收录</span>
+<span class="func_select"><span class="checkbox"><input type="checkbox" id="chk_haosoukz" name="chk_haosoukz" /></span>360是否收录</span>
+<span class="func_select"><span class="checkbox"><input type="checkbox" id="chk_haosouaq" name="chk_haosouaq" /></span>360安全</span>
+</p>
+<p>
+<span class="func_select"><span class="checkbox"><input type="checkbox" id="chk_sogoupr" name="chk_sogoupr" /></span>搜狗PR</span>
+<span class="func_select"><span class="checkbox"><input type="checkbox" id="chk_sogousl" name="chk_sogousl" /></span>搜狗收录</span>
+<span class="func_select"><span class="checkbox"><input type="checkbox" id="chk_sogoukz" name="chk_sogoukz" /></span>搜狗快照</span>
+</p>
+<p>
+<!--<span class="func_select red"><span class="checkbox selected"><input type="checkbox" id="chk_pr" name="chk_pr" checked /></span>Google PR</span>-->
+<span class="func_select"><span class="checkbox"><input type="checkbox" id="chk_alexa" name="chk_alexa" /></span>ALEXA排名</span>
+<span class="func_select"><span class="checkbox"><input type="checkbox" id="chk_whois" name="chk_whois" /></span>建站时间</span>
+<span class="func_select"><span class="checkbox"><input type="checkbox" id="chk_daochu" name="chk_daochu" /></span>导出链接</span>
+<span class="func_select"><span class="checkbox"><input type="checkbox" id="chk_ip" name="chk_ip" /></span>网站IP</span>
+<span class="func_select"><span class="checkbox"><input type="checkbox" id="chk_title" name="chk_title"/></span>网站标题</span>
+</p>
+<p>
+<span class="func_select"><span class="checkbox"><input type="checkbox" id="chk_backlinks1" name="chk_backlinks1" /></span>百度1天反链</span>
+<span class="func_select"><span class="checkbox"><input type="checkbox" id="chk_backlinks7" name="chk_backlinks7"/></span>百度7天反链</span>
+<span class="func_select"><span class="checkbox"><input type="checkbox" id="chk_sl1" name="chk_sl1" /></span>百度1天收录</span>
+<span class="func_select"><span class="checkbox"><input type="checkbox" id="chk_sl7" name="chk_sl7" /></span>百度7天收录</span>
+<span class="func_select"><span class="checkbox"><input type="checkbox" id="chk_baidusl" name="chk_baidusl" /></span>百度是否收录</span>
+</p>
+</div>
+<div class="c"></div>
+</div>
+
+
+
+
+<!--底部广告区-->
+<div class="pics">
+</div>
+
+
+
+<!--右则一键重查-->
+<div id="float_box">
+<div>
+<a class="item-tools" href="javascript:return false;" title="返回顶部" onclick="window.scrollTo(0,0);">
+<span class="go-top">︽</span>
+</a>
+</div>
+<div>
+<a class="item-tools" href="javascript:return false;" title="一键查询所有失败项" onclick="RecheckFail();return false;">
+<span class="recheck-txt">重查失败</span>
+</a>
+</div>
+<div>
+<a class="item-tools" href="javascript:return false;" title="导出查询结果,并生成文件下载" onclick="getExcel();return false;">
+<span class="recheck-txt">导出结果</span>
+</a>
+</div>
+
+<div>
+<a class="item-tools" href="javascript:return false;" title="到最底部" onclick="window.scrollTo(0,9999999);">
+<span class="go-bottom">︾</span>
+</a>
+</div>
+</div>
+
+
+
+
+
+<!--全站footer-->
+<div class="footer">
+<div class="box">
+
+<div class="bdshare">
+<div id="bdshare" class="bdshare_t bds_tools get-codes-bdshare" data="{'url':'http://www.link114.cn/'}">
+<span class="bds_more">分享到：</span>
+<a class="bds_qzone"></a>
+<a class="bds_tsina"></a>
+<a class="bds_tqq"></a>
+<a class="bds_renren"></a>
+<a class="bds_kaixin001"></a>
+<a class="shareCount"></a>
+</div>
+<script type="text/javascript" id="bdshare_js" data="type=tools&amp;mini=1&amp;uid=556970" ></script>
+<script type="text/javascript" id="bdshell_js"></script>
+<script type="text/javascript">
+var bds_config = {
+'bdText':'站长必备，批量查询工具，可同时查询上千个网站的各种数据',
+'bdDesc':'link114,极力推荐，批量查询速度一流'
+}
+document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?t=" + new Date().getHours();
+</script>
+
+<div class="c"></div>
+</div>
+<p>点击没反应，刷新一下&nbsp;&nbsp;&nbsp;&nbsp;发现Bug:QQ:243211858</p>
+<p><a href="http://phone.link114.cn/" target=_blank >手机定位</a><a href="http://qq.link114.cn/" target=_blank >QQ号测运气</a><a href="http://www.360cpm.cn/" target=_blank >cpm广告联盟</a><a href="http://www.360cpm.cn/" target=_blank >弹窗广告联盟</a></p>
+<p><a rel="nofollow" href="http://www.miitbeian.gov.cn/" target="_blank">粤ICP备11088913号</a></p>
+</div>
+</div>
+
+<div style="display:none">
+<img src="/template/images/loading.gif" />
+<img src="/template/images/bdr-0.gif" /><img src="/template/images/bdr-1.gif" /><img src="/template/images/bdr-2.gif" /><img src="/template/images/bdr-3.gif" /><img src="/template/images/bdr-4.gif" /><img src="/template/images/bdr-5.gif" /><img src="/template/images/bdr-6.gif" /><img src="/template/images/bdr-7.gif" /><img src="/template/images/bdr-8.gif" /><img src="/template/images/bdr-9.gif" /><img src="/template/images/bdr-10.gif" />
+<img src="/template/images/bdrzz-0.gif" /><img src="/template/images/bdrzz-1.gif" /><img src="/template/images/bdrzz-2.gif" /><img src="/template/images/bdrzz-3.gif" /><img src="/template/images/bdrzz-4.gif" /><img src="/template/images/bdrzz-5.gif" /><img src="/template/images/bdrzz-6.gif" /><img src="/template/images/bdrzz-7.gif" /><img src="/template/images/bdrzz-8.gif" /><img src="/template/images/bdrzz-9.gif" /><img src="/template/images/bdrzz-10.gif" />
+<img src="/template/images/360rank-0.gif" /><img src="/template/images/360rank-1.gif" /><img src="/template/images/360rank-2.gif" /><img src="/template/images/360rank-3.gif" /><img src="/template/images/360rank-4.gif" /><img src="/template/images/360rank-5.gif" /><img src="/template/images/360rank-6.gif" /><img src="/template/images/360rank-7.gif" /><img src="/template/images/360rank-8.gif" /><img src="/template/images/360rank-9.gif" /><img src="/template/images/360rank-10.gif" />
+
+</div>
+
+
+
+
+
+</body>
+</html>

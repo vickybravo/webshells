@@ -1,0 +1,403 @@
+﻿.render-body {
+    padding-bottom: 0;
+}
+.duvidas .coluna1 {
+	float: left;
+	padding: 0 3% 50px 0;
+	width: 48%;
+}
+.duvidas .coluna2 {
+	float: left;
+	padding: 0 0 50px 0;
+	width: 48%;
+}
+.duvidas .top {
+	background-image: url("../img/internas/interrogacao.png");
+	background-position: left center;
+	background-repeat: no-repeat;
+	border-top: 1px solid #E6E6E6;
+	margin: 21px 0 0 4px;
+	padding: 35px 80px 0;
+}
+.duvidas ul li ul {
+	display: none;
+}
+.duvidas ul li {
+}
+.duvidas ul li span.btn-dad {
+	border-bottom: 1px solid #CCCCCC;
+	color: #000000;
+	display: block;
+	font-family: "museo 300", Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, sans-serif;
+	font-size: 15px;
+	margin: 32px 0 0;
+	padding: 0 0 7px;
+	cursor: pointer;
+}
+.duvidas ul li span.btn-dad .ar-dn, .duvidas ul li span.btn-child .ar-dn {
+	display: none;
+}
+.duvidas ul, .duvidas ul li, .duvidas ul li ul, .duvidas ul li ul li {
+	float: left;
+	width: 100%;
+}
+.duvidas ul li ul li:first-child {
+	border: 0 none;
+}
+.duvidas ul li ul li {
+}
+.duvidas ul li ul li .hide {
+	border-bottom: 1px solid #CCCCCC;
+	display: none;
+	float: left;
+	width: 100%;
+}
+.duvidas ul li ul li .hide p {
+	color: #A0A0A0;
+	display: block;
+	font-family: "museo 100", Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, sans-serif;
+	font-size: 13px;
+	margin: 0 0 12px;
+	background-color: #F2F2F2;
+	padding: 12px 28px;
+}
+.duvidas ul li ul li .hide a {
+	color: #00ADEF;
+    font-size: 13px;
+}
+.duvidas ul li ul li .hide p.no_margin {
+	margin: 0;
+	padding: 12px 28px 0 28px;
+}
+.duvidas ul li ul li .hide ol li {
+	color: #A0A0A0;
+	display: block;
+	font-family: "museo 100", Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, sans-serif;
+	font-size: 13px;
+	list-style: decimal inside;
+    display:list-item;
+}
+.duvidas ul li ul li .hide ol {
+	display: block;
+	margin: 0 0 12px;
+	float: left;
+	background-color: #F2F2F2;
+	padding: 12px 28px;
+    width:88%;
+}
+.duvidas .coluna2 ul li ul li .hide *
+{
+    background-color:transparent;
+}
+.duvidas .coluna2 ul li ul li .hide
+{
+    background-color:#F2F2F2;
+}
+.duvidas ul li ul li span {
+	border-bottom: 1px solid #CCCCCC;
+	color: #A0A0A0;
+	display: block;
+	font-family: "museo 300", Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, sans-serif;
+	font-size: 13px;
+	padding: 13px 16px;
+	cursor: pointer;
+    *width:93%;
+    *float:left;
+}
+.duvidas ul li ul li span.btn-child img {
+	float: right;
+    *float:none;
+}
+.duvidas span .ar-up {
+	margin: 0 0 0 6px;
+}
+.duvidas span .ar-dn {
+	margin: 0 0 0 6px;
+}
+.duvidas ul li ul li span .ar-up {
+	display: inline;
+}
+.duvidas ul li ul li span .ar-dn {
+	display: none;
+}
+.duvidas ul li ul li span.blue-tx .ar-up {
+	display: none;
+}
+.duvidas ul li ul li span.blue-tx .ar-dn {
+	display: inline;
+}
+.duvidas .mensagem {
+	border-bottom: 1px solid #CCCCCC;
+	float: left;
+	margin: 0 0 36px;
+	width: 100%;
+}
+.duvidas .mensagem .top {
+	background-image: url(../img/internas/envelope.png);
+}
+.duvidas .mensagem .campo-formulario {
+	padding: 0 0 0 85px;
+}
+.duvidas .mensagem input, .duvidas .mensagem .fd-mensagem textarea {
+	background-color: #F8F8F8;
+	border: 2px solid #D9D9D9;
+	color: #9D9D9D;
+	font-family: "Museo300", Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, sans-serif;
+	font-size: 15px;
+	padding: 10px 2%;
+	width: 95%;
+}
+.duvidas .mensagem .fd-mensagem textarea {
+	height: 140px;
+}
+.duvidas .mensagem .fd-cnpj, .duvidas .mensagem .fd-telefone {
+	float: left;
+	margin: 0 4% 36px 0;
+	width: 25%;
+}
+.duvidas .mensagem .fd-telefone ul li {
+	margin: 0 6% 0 0;
+	width: 27%;
+ *width: 25%;
+	width /*\**/: 25%\9;
+}
+.duvidas .mensagem .fd-telefone ul li.hifen {
+	margin: 12px 4% 0 0;
+	width: auto;
+}
+.duvidas .mensagem .fd-telefone ul li:last-child {
+	margin: 0;
+}
+.duvidas .mensagem .fd-telefone ul li input {
+}
+.duvidas .mensagem .fd-telefone ul li.hifen {
+}
+.duvidas .mensagem .fd-nome-fantasia, .duvidas .mensagem .fd-email {
+	float: left;
+	margin: 0 0 36px;
+	width: 70%;
+}
+.duvidas .mensagem .fd-assunto, .duvidas .mensagem .fd-mensagem {
+	float: left;
+	margin: 0 0 36px 0;
+	width: 100%;
+}
+.duvidas .mensagem .fd-assunto, .duvidas .mensagem .fd-mensagem {
+	float: left;
+	margin: 0 0 16px 0;
+	width: 100%;
+}
+.field-validation-error {
+    padding: 6px 6px 0;
+}
+select.input-validation-error option{
+}
+.duvidas .mensagem .fd-assunto .field-validation-error {
+    float:left;
+    padding-top:10px;
+}
+.duvidas .mensagem label {
+	color: #474747;
+	float: left;
+	font-family: 'museo500', Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, sans-serif;
+	font-size: 13px;
+	padding: 0 16px 6px 0;
+}
+.duvidas .mensagem .fd-assunto label{
+    padding-top: 10px;
+}
+.duvidas .mensagem .select-ct{
+    background-color: #F8F8F8;
+    background-image:url(../img/internas/seta-select.png);
+    background-position:right center;
+    background-repeat:no-repeat;
+    border: 2px solid #D9D9D9;
+    float: left;
+    padding: 8px 7px;
+    width: 40%;
+    overflow:hidden;
+    *background-image:none;
+    *padding:0;
+    *border:0 none;
+    *margin-top:9px;
+}
+.duvidas .mensagem .select-ct select{
+    font-size: 13px;
+    height: 18px;
+    width: 112%;
+    *width:100%;
+    *padding: 8px 7px;
+    *border: 2px solid #D9D9D9;
+    *display:block;
+}
+.duvidas .mensagem .select-ct select option{
+    font-size: 13px;
+    padding: 2px 5px;
+}
+.duvidas .mensagem .ft-enviar p {
+	color: #979797;
+	float: left;
+	font-size: 11px;
+	margin: 0 0 0 13px;
+	padding: 13px 0;
+}
+.duvidas .mensagem .ft-enviar input {
+	background-color: #D0D0D0;
+	color: #FFFFFF;
+	float: left;
+	padding: 10px 16px 7px;
+	width: 28px;
+}
+.duvidas .mensagem .ft-enviar button {
+	background-color: #8A38BA;
+	background-image: url(../img/comum/generic-btn.png);
+	background-position: center center;
+	font-size: 13px;
+	border-radius: 17px;
+	float: right;
+	margin: 8px 13px 40px 0;
+	padding: 4px 0;
+	text-align: center;
+	text-transform: capitalize;
+	width: 142px;
+	font-family: "museo300", Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, sans-serif;
+	color: #ffffff;
+}
+.icones {
+	margin: 0 0 30px;
+}
+.icones .iticon {
+	float: left;
+	margin: 0 0 28px;
+	width: 100%;
+	cursor: pointer;
+ *padding: 0 0 14px;
+ *margin: 0;
+}
+.icones .iticon .img-cont {
+	float: left;
+	padding: 0 26px 0 0;
+	text-align: center;
+	width: 56px;
+}
+.icones .iticon h5 {
+	font-family: "museo100", Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, sans-serif;
+	font-size: 16px;
+}
+.icones .iticon a {
+	color: #000000 !important;
+	font-family: "museo300", Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, sans-serif;
+	font-size: 13px;
+}
+.icones .iticon img.ar-dir, .icones .iticon img.ar-bdn {
+	margin: 0 0 0 12px;
+}
+.icones .iticon img.ar-bdn {
+	display: none;
+}
+.icones h3 {
+	border-bottom: 1px solid #E3E3E3;
+	float: left;
+	margin: 0 0 26px;
+	padding: 24px 0 16px;
+	width: 100%;
+}
+.tooltipbox {
+	background-color: #00AEEF;
+	float: left;
+	padding: 10px;
+	display: none;
+}
+.tooltipbox *, .tooltipbox p {
+	color: #FFFFFF;
+	padding: 0;
+}
+.tooltipbox small {
+	display: block;
+	padding: 0 0 10px;
+}
+.tooltipbox small:last-child {
+	padding: 0;
+}
+.interna .container .st-image {
+	background-image: url("../img/internas/contato-fundo.jpg");
+	height: 265px;
+}
+.interna .container .st-image .sl-texto h2, .interna .container .st-image .sl-texto p {
+	color: #FFFFFF;
+}
+.container .st-footer {
+    position:static;
+}
+/*--SELECT-------------------------------------------------------
+.select-ct{
+    background-color: #F6F6F6;
+    background-image: url("../img/comum/seta-select.png");
+    background-position: right center;
+    background-repeat: no-repeat;
+    border: 2px solid #D9D9D9;
+    margin: 0 0 30px;
+    overflow: hidden;
+    padding: 10px 0;
+    width: 99.5%;  
+    float:left;
+    *padding:0;
+    *border:0 none;
+    *background-position:830px 5px;
+}
+.select-ct select{
+    height: 22px;
+    overflow: hidden;
+    width: 105%;
+    padding-left:1%;
+    *padding: 10px 0;
+}
+.select-ct select, .select-ct select option{
+    font-size:15px;
+    color:#474747;
+    font-family: "museo300",Segoe,"Segoe UI","DejaVu Sans","Trebuchet MS",Verdana,sans-serif;
+    border:0;
+}
+.select-ct select option{ 
+    padding:5px 0; 
+}
+*/
+/*----------------------------------------------------------------*/
+@media screen and (max-width: 960px){ .container .render-body{ padding: 0 !important; } }
+@media screen and (max-width: 960px) {
+.duvidas .coluna1, .duvidas .coluna2 {
+	width: 100%
+}
+.duvidas .coluna1 {
+	padding: 0;
+}
+.duvidas .mensagem .campo-formulario {
+	padding: 0;
+}
+.duvidas .mensagem .fd-cnpj, .duvidas .mensagem .fd-telefone,  .duvidas .mensagem .fd-cnpj, .duvidas .mensagem .fd-nome-fantasia,  .duvidas .mensagem .fd-cnpj, .duvidas .mensagem .fd-telefone,  .duvidas .mensagem .fd-cnpj, .duvidas .mensagem .fd-email,  .duvidas .mensagem .fd-cnpj, .duvidas .mensagem .fd-assunto,  .duvidas .mensagem .fd-cnpj, .duvidas .mensagem .fd-mensagem,  .duvidas .mensagem .fd-cnpj, .duvidas .mensagem .ft-enviar {
+}
+}
+
+@media screen and (max-width: 560px) {
+.duvidas .mensagem .fd-cnpj, .duvidas .mensagem .fd-telefone,  .duvidas .mensagem .fd-cnpj, .duvidas .mensagem .fd-nome-fantasia,  .duvidas .mensagem .fd-cnpj, .duvidas .mensagem .fd-telefone,  .duvidas .mensagem .fd-cnpj, .duvidas .mensagem .fd-email,  .duvidas .mensagem .fd-cnpj, .duvidas .mensagem .fd-assunto,  .duvidas .mensagem .fd-cnpj, .duvidas .mensagem .fd-mensagem,  .duvidas .mensagem .fd-cnpj, .duvidas .mensagem .ft-enviar {
+	width: 100%;
+}
+.duvidas ul li ul li .hide ol {
+    width: 75%;
+}
+    .duvidas .mensagem .select-ct select
+    {
+        width:130%;
+    }
+}
+
+@media screen and (max-width: 330px) {
+.duvidas .top {
+	padding: 35px 0 0 80px;
+}
+}
+@media screen and (max-width: 768px) {
+	.interna .container .st-image .foto-header {
+		display: none;
+	}
+}

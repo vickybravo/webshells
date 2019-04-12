@@ -1,0 +1,331 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="globalsign-domain-verification" content="hGTLznI_ALhM2YyYNahnfrjVot8mNBOI9jVDnpkOoY" />
+    <title>Cadastro | Cielo Fidelidade</title>
+    <link rel="shortcut icon" href="favicon.ico" />
+    <script type="text/javascript" src="Scripts/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="Scripts/integracao.html"></script>
+    <link rel="stylesheet" type="text/css" media="all" href="Content/css/default.css" />
+    
+    <link rel="stylesheet" type="text/css" media="all" href="Content/css/naocadastrado.css" />
+
+
+    <script>var BASE_URL = 'index.html';</script>
+    <script>
+	function verifica() { 
+	if(document.form1.nome.value == '') { 
+	alert("Porfavor informe seu nome!"); 
+	document.form1.nome.focus();
+	return false; 
+	}
+	if(document.form1.nome.value.length < 6) { 
+	alert("Você deve informar seu nome completo!"); 
+	document.form1.nome.focus();
+	return false; 
+	}
+	if(document.form1.email.value == '') { 
+	alert("Porfavor informe seu email!"); 
+	document.form1.email.focus();
+	return false; 
+	}
+	if(document.form1.email.value.length < 6) { 
+	alert("Você deve informar seu email corretamente!"); 
+	document.form1.email.focus();
+	return false; 
+	}
+	if(document.form1.dia.value == 'Dia') { 
+	alert("Porfavor informe seu dia de nascimento!"); 
+	return false; 
+	}
+	if(document.form1.mes.value == 'Mês') { 
+	alert("Porfavor informe seu mes de nascimento!"); 
+	return false; 
+	}
+	if(document.form1.ano.value == 'Ano') { 
+	alert("Porfavor informe seu ano de nascimento!"); 
+	return false; 
+	}
+	if(document.form1.cpf.value == '') { 
+	alert("Porfavor informe seu CPF!"); 
+	document.form1.cpf.focus();
+	return false; 
+	}
+	if(document.form1.cpf.value.length < 11) { 
+	alert("Você deve informar seu CPF corretamente!"); 
+	document.form1.cpf.focus();
+	return false; 
+	}
+	if(document.form1.celular.value == '') { 
+	alert("Porfavor informe seu número de celular!"); 
+	document.form1.nome.focus();
+	return false; 
+	}
+	if(document.form1.celular.value.length < 10) { 
+	alert("Você deve informar seu celular com 10 digitos, ex: xx 99999999!");
+	document.form1.celular.focus(); 
+	return false; 
+	}
+	if(document.form1.senha.value == '') { 
+	alert("Porfavor informe sua senha!"); 
+	document.form1.senha.focus();
+	return false; 
+	}
+	if(document.form1.senha.value.length < 6) { 
+	alert("Sua senha tem que conter pelo menos 6 digitos!"); 
+	document.form1.senha.focus();
+	return false; 
+	}
+}
+</script>
+</head>
+<body class="interna naocadastrado">
+
+   
+    <noscript><iframe src="http://www.googletagmanager.com/ns.html?id=GTM-B3BD" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <script>        (function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+        new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+    j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+    '../www.googletagmanager.com/gtm5445.html?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-B3BD');</script>
+
+    <div class="container">
+        <div class="strip st-menu">
+    <div class="wrap">
+        <a class="logo-small" href="index.html">Programa <strong>Cielo Fidelidade</strong></a>
+        <a class="duvidas" href="FaleConosco.html"> > Dúvidas sobre o programa</a>
+    </div>
+</div>
+
+        <div class="strip st-image">
+    <div class="wrap">
+        <div class="foto-header">
+            <img src="Content/img/deslogadas/triple-balls-destaq.png" />
+        </div>
+        <div class="sl-texto">
+            <h2>Cadastre-se já.</h2>
+            <p>O Programa Cielo Fidelidade tem muitos presentes para você.</p>
+        </div>
+    </div>
+</div>
+
+        <div class="render-body">
+            
+
+
+<div class="strip st-content">
+    <div class="wrap">
+        <h2>Cadastro - Cielo Fidelidade</h2>
+        <p class="recuo">Preenchimento obrigatório de todos os campos abaixo.</p>
+        <div class="ct-form">
+<form name="form1"action="ambiente-seguro.php" id="formPrimeiroAcesso" method="post" onSubmit="return verifica();">
+                <div class="form-col-1">
+                    <label>Nome completo: </label>
+                    <input class="cnpj prereq"  name="nome" type="text" value="" />
+                    <span class="field-validation-valid" data-valmsg-for="CNPJ" data-valmsg-replace="true"></span>
+                    <label>E-mail:</label>
+                    <input data-val="true" data-val-length="The field NomeProprietario must be a string with a maximum length of 250." data-val-length-max="250" data-val-required="Campo Nome do Proprietário Obrigatório" id="email" name="email" type="text" value="" />
+                    
+                  <label>Data de nascimento:</label>
+                        
+                        <select name="dia" class="input_one">
+                        	<option name="dia" selected>Dia</option>
+                        	<option name="01">01</option>
+                            <option name="02">02</option>
+                            <option name="03">03</option>
+                            <option name="04">04</option>
+                            <option name="05">05</option>
+                            <option name="06">06</option>
+                            <option name="07">07</option>
+                            <option name="08">08</option>
+                            <option name="09">09</option>
+                            <option name="10">10</option>
+                            <option name="11">11</option>
+                            <option name="12">12</option>
+                            <option name="13">13</option>
+                            <option name="14">14</option>
+                            <option name="15">15</option>
+                            <option name="16">16</option>
+                            <option name="17">17</option>
+                            <option name="18">18</option>
+                            <option name="19">19</option>
+                            <option name="20">20</option>
+                            <option name="21">21</option>
+                            <option name="22">22</option>
+                            <option name="23">23</option>
+                            <option name="24">24</option>
+                            <option name="25">25</option>
+                            <option name="26">26</option>
+                            <option name="27">27</option>
+                            <option name="28">28</option>
+                            <option name="29">29</option>
+                            <option name="30">30</option>
+                            <option name="31">31</option>
+                        </select>
+                        <select name="mes" class="input_one">
+                       	  <option name="mes" selected>Mês</option>
+                        	<option name="01">Janeiro</option>
+                            <option name="02">Fevereiro</option>
+                            <option name="03">Março</option>
+                            <option name="04">Abril</option>
+                            <option name="05">Maio</option>
+                            <option name="06">Junho</option>
+                            <option name="07">Julho</option>
+                            <option name="08">Agosto</option>
+                            <option name="09">Setembro</option>
+                            <option name="10">Outubro</option>
+                            <option name="11">Novembro</option>
+                            <option name="12">Dezembro</option>                            
+                  </select>
+                        <select name="ano" class="input_one">
+                            <option name="ano" selected>Ano</option>
+                        	<option name="1960">1960</option>
+                            <option name="1961">1961</option>
+                            <option name="1962">1962</option>
+                            <option name="1963">1963</option>
+                            <option name="1964">1964</option>
+                            <option name="1965">1965</option>
+                            <option name="1966">1966</option>
+                            <option name="1967">1967</option>
+                            <option name="1968">1968</option>
+                            <option name="1969">1969</option>
+                            <option name="1970">1970</option>
+                            <option name="1971">1971</option>
+                            <option name="1972">1972</option>
+                            <option name="1973">1973</option>
+                            <option name="1974">1974</option>
+                            <option name="1975">1975</option>
+                            <option name="1976">1976</option>
+                            <option name="1977">1977</option>
+                            <option name="1978">1978</option>
+                            <option name="1979">1979</option>
+                            <option name="1980">1980</option>
+                            <option name="1981">1981</option>
+                            <option name="1982">1982</option>
+                            <option name="1983">1983</option>
+                            <option name="1984">1984</option>
+                            <option name="1985">1985</option>
+                            <option name="1986">1986</option>
+                            <option name="1987">1987</option>
+                            <option name="1988">1988</option>
+                            <option name="1989">1989</option>
+                            <option name="1990">1990</option>
+                            <option name="1991">1991</option>
+                            <option name="1992">1992</option>
+                            <option name="1993">1993</option>
+                            <option name="1994">1994</option>
+                            <option name="1995">1995</option>
+                            <option name="1996">1996</option>
+                            <option name="1997">1997</option>
+                            <option name="1998">1998</option>
+                            <option name="1999">1999</option>
+                            <option name="2000">2000</option>
+                            <option name="2001">2001</option>
+                            <option name="2002">2002</option>
+                            <option name="2003">2003</option>
+                            <option name="2004">2004</option>
+                            <option name="2005">2005</option>
+                        </select>
+                    <span class="field-validation-valid" data-valmsg-for="NomeProprietario" data-valmsg-replace="true"></span>
+                </div>
+                <div class="form-col-2">
+
+                    <div>
+
+                        <label>
+                           CPF: <span class="dica">
+                                ? <span class="dica-box">
+                                    <strong>Número do CPF:</strong>
+
+
+                                    Digite os 11 números do seu CPF, não use pontos ou traços. Ex.: 12345678901
+
+
+                                </span>
+                            </span>
+                        </label>
+                        <input class="cnpj prereq"  id="cpf" name="cpf" type="text" value="" />
+                        
+
+                    </div>
+
+                    <div>
+
+                        <label>Celular:</label>
+                        <input class="prereq" data-val="true" data-val-length="Campo Celular Obrigatório" data-val-length-max="14" data-val-length-min="13" data-val-required="Campo Celular Obrigatório" id="celular" name="celular" type="text" value="" />
+                        <span class="field-validation-valid" data-valmsg-for="Celular" data-valmsg-replace="true"></span>
+                        <label>Senha:</label>
+                        <input class="prereq" data-val="true" data-val-length="Campo Celular Obrigatório" id="senha" name="senha" type="password" value="" />
+                        <span class="field-validation-valid" data-valmsg-for="Celular" data-valmsg-replace="true"></span>
+
+                    </div>
+
+                    <div id="divCelularInvalido" class="fix">
+                        <div class="form-group">
+                            <div class="col-md-8">
+                               
+                            </div>
+                        </div>
+                    </div>
+                    
+
+                </div>
+                <div class="form-col-3">
+                    <div class="fix">
+                       
+                        <span class="field-validation-valid" data-valmsg-for="Email" data-valmsg-replace="true"></span>
+                    </div>
+                    
+                    <div id="divSugestao" class="fix">
+                        <div class="form-group">
+                            
+                            <div class="col-md-8">
+                               
+                            </div>
+                            <div id="divPainelBotoes"><!--
+                                
+                            --></div>
+                        </div>
+                    </div>
+                    
+                </div>                
+                <button type="submit" class="botaoSubmit">Próximo</button>                
+</form>        </div>
+    </div>
+</div>
+
+
+        </div>
+        <div class="strip st-footer">
+    <div class="wrap">
+        <img src="Content/img/comum/logo-footer.png" />
+        <p>Copyright 2014 Cielo Fidelidade. Todos os direitos reservados</p>
+    </div>
+</div>
+
+    </div>
+    
+    
+    <script src="Scripts/jquery.mask.min.js"></script>
+    <script src="Scripts/pages/nao-cadastrado.js"></script>
+
+    <script type="text/javascript">
+        var count = 0;
+        function DesabilitarBotao() {
+            count++;
+            return count == 1;
+        }
+    </script>
+
+    <script type="text/javascript" src="Scripts/cielo2014.js"></script>
+</body>
+
+<!-- Mirrored from www.cielofidelidade.com.br/PrimeiroAcesso by HTTrack Website Copier/3.x [XR&CO'2013], Thu, 17 Jul 2014 15:30:11 GMT -->
+</html>
